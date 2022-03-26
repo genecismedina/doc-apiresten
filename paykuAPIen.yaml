@@ -11,7 +11,7 @@ info:
     # Introduction
     Welcome to the Payku API. You can use our API to access the different
     Payku endpoints, where you can generate and manage payments through different
-    methods and get information from them.
+    methods and get information from them..
 
     The API is organized around REST. It has predictable URLs and resource-oriented,
     and uses HTTP response codes to indicate the result of the call. All API 
