@@ -11,7 +11,7 @@ info:
     # Introduction
     Welcome to the Payku API. You can use our API to access the different
     Payku endpoints, where you can generate and manage payments through different
-    methods and get information from them..
+    methods and get information from them.
 
     The API is organized around REST. It has predictable URLs and resource-oriented,
     and uses HTTP response codes to indicate the result of the call. All API 
@@ -62,6 +62,10 @@ info:
       'region' => 'Metropolitana', 
       'city' => 'Santiago', 
       'postal_code' => '850000',
+      'additional_parameters' => [
+        'parameter_1' => 'example', 
+        'parameter_2' => 'example 2',
+      ]
     ];
     ksort($data);
     ```
@@ -438,7 +442,11 @@ paths:
                 "country": "Chile",
                 "region": "Metropolitana",
                 "city": "Santiago",
-                "postal_code": "850000
+                "postal_code": "850000,
+                "additional_parameters":{
+                  "parameter_1": "example",
+                  "parameter_2": "example 2", 
+                }
               }'
         - lang: "PHP"
           source: |
@@ -454,6 +462,10 @@ paths:
                   'region' => 'Metropolitana', 
                   'city' => 'Santiago', 
                   'postal_code' => '850000',
+                  'additional_parameters' => [
+                      'parameter_1' => 'example', 
+                      'parameter_2' => 'example 2'
+                    ]
                   ],  
                 'headers' => [                 
                   'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
@@ -486,7 +498,11 @@ paths:
               country: "Chile",
               region: "Metropolitana",
               city: "Santiago",
-              postal_code: "850000"
+              postal_code: "850000",
+              additional_parameters:{
+                parameter_1: "example",
+                parameter_2: "example 2",  
+              }
             };
 
             request(data);
@@ -533,6 +549,18 @@ paths:
                   description: Client Zip Code.
                   type: string
                   example: "850000"
+                additional_parameters:
+                  description: Client additional parameters
+                  type: object
+                  properties:
+                    parameter_1:
+                      description: Client additional parameter 
+                      type: string
+                      example: "example"
+                    parameter_2:
+                      description: Client additional parameter
+                      type: string
+                      example: "example"
               required:
                 - email
                 - name
@@ -891,7 +919,11 @@ paths:
                 "country": "Chile",
                 "region": "Metropolitana",
                 "city": "Santiago",
-                "postal_code": "850000
+                "postal_code": "850000,
+                "additional_parameters":{
+                  "parameter_1": "example",
+                  "parameter_2": "example 2", 
+                }
               }'
         - lang: "PHP"
           source: |
@@ -907,6 +939,10 @@ paths:
                   'region' => 'Metropolitana', 
                   'city' => 'Santiago', 
                   'postal_code' => '850000',
+                  'additional_parameters' => [
+                      'parameter_1' => 'example', 
+                      'parameter_2' => 'example 2'
+                    ]
                   ],  
                 'headers' => [                 
                   'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
@@ -939,7 +975,11 @@ paths:
               country: "Chile",
               region: "Metropolitana",
               city: "Santiago",
-              postal_code: "850000"
+              postal_code: "850000",
+              additional_parameters:{
+                parameter_1: "example",
+                parameter_2: "example 2", 
+              }
             };
 
             request(data);
@@ -986,6 +1026,18 @@ paths:
                   description: Client Zip Code.
                   type: string
                   example: "850000"
+                additional_parameters:
+                  description: Client additional parameters
+                  type: object
+                  properties:
+                    parameter_1:
+                      description: Client additional parameter 
+                      type: string
+                      example: "example"
+                    parameter_2:
+                      description: Client additional parameter
+                      type: string
+                      example: "example"
               required:
                 - email
                 - name
@@ -1109,7 +1161,11 @@ paths:
                 "country": "Chile",
                 "region": "Metropolitana",
                 "city": "Santiago",
-                "postal_code": "750000"
+                "postal_code": "750000",
+                "additional_parameters":{
+                  "parameter_1": "example",
+                  "parameter_2": "example 2", 
+                }
               }'
         - lang: "PHP"
           source: |
@@ -1124,6 +1180,10 @@ paths:
                   'region'  => 'Metropolitana', 
                   'city'    => 'Santiago', 
                   'postal_code' => '750000',
+                  'additional_parameters' => [
+                    'parameter_1' => 'example', 
+                    'parameter_2' => 'example 2'
+                  ]
                 ],  
               ],             
               'headers' => [                 
@@ -1156,7 +1216,11 @@ paths:
               country: "Chile",
               region: "Metropolitana",
               city: "Santiago",
-              postal_code: "750000"
+              postal_code: "750000",
+              additional_parameters:{
+                parameter_1: "example",
+                parameter_2: "example 2", 
+              }
             };
 
             request(data);
@@ -1199,6 +1263,18 @@ paths:
                   description: Client Zip Code.
                   type: string
                   example: "750000"
+                additional_parameters:
+                  description: Client additional parameters
+                  type: object
+                  properties:
+                    parameter_1:
+                      description: Client additional parameter 
+                      type: string
+                      example: "example"
+                    parameter_2:
+                      description: Client additional parameter
+                      type: string
+                      example: "example"
 
     delete:
       tags:
@@ -3453,6 +3529,18 @@ components:
           description: Client subscriptions.
           type: object
           example: null
+        additional_parameters:
+          description: Client additional parameters
+          type: object
+          properties:
+            parameter_1:
+              description: Client additional parameter 
+              type: string
+              example: "example"
+            parameter_2:
+              description: Client additional parameter
+              type: string
+              example: "example"
 
     ClientIdResponse:
       description: "Return data from a client insert"
@@ -3512,6 +3600,18 @@ components:
           type: string
           example: null
           format: datetime
+        additional_parameters:
+          description: Client additional parameters
+          type: object
+          properties:
+            parameter_1:
+              description: Client additional parameter 
+              type: string
+              example: "example"
+            parameter_2:
+              description: Client additional parameter
+              type: string
+              example: "example"
         subcriptions:
           type: object
           properties:
@@ -3671,6 +3771,18 @@ components:
           type: string
           example: "2020-10-2 08:32:52"
           format: datetime
+        additional_parameters:
+          description: Client additional parameters
+          type: object
+          properties:
+            parameter_1:
+              description: Client additional parameter 
+              type: string
+              example: "example"
+            parameter_2:
+              description: Client additional parameter
+              type: string
+              example: "example"
         subcriptions:
           type: object
           properties:
