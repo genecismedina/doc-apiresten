@@ -444,7 +444,7 @@ paths:
                 "city": "Santiago",
                 "postal_code": "850000,
                 "additional_parameters":{
-                  "parameter_1": "example",
+                  "parameter_1": "example 1",
                   "parameter_2": "example 2", 
                 }
               }'
