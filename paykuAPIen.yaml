@@ -2167,14 +2167,16 @@ paths:
                   description: |
                     Identifier of the payment method. If the identifier is sent, the payer will be redirected directly to the indicated means of payment.
                     - 1 Webpay
-                    - 2 Kiphu
                     - 3 Multicaja Efectivo
                     - 4 Multicaja Transferencia
                     - 5 Onepay
                     - 6 Pago46
                     - 7 Sweetpay
+                    - 8 Hites
                     - 9 Mach
-                    - 99 All
+                    - 11 Khipu
+                    - 12 Chek
+                    - 99 All  
                   type: integer
                   example: 1
                 urlreturn:
@@ -3228,14 +3230,16 @@ paths:
                   description: |
                     Identifier of the payment method. If the identifier is sent, the payer will be redirected directly to the indicated means of payment.
                     - 1 Webpay
-                    - 2 Kiphu
                     - 3 Multicaja Efectivo
                     - 4 Multicaja Transferencia
                     - 5 Onepay
                     - 6 Pago46
                     - 7 Sweetpay
+                    - 8 Hites
                     - 9 Mach
-                    - 99 All
+                    - 11 Khipu
+                    - 12 Chek
+                    - 99 All 
                   type: integer
                   example: 1
                 urlreturn:
