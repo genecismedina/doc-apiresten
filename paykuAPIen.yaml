@@ -14,36 +14,36 @@ info:
     methods and get information from them.
 
     The API is organized around REST. It has predictable URLs and resource-oriented,
-    and uses HTTP response codes to indicate the result of the call. All API 
+    and uses HTTP response codes to indicate the result of the call. All API
     responses return objects JSON, including errors.
 
-    User should look for a 200 result code. If received any result code other 
-    than 200, the request, or the response is invalid, which means that the fields 
+    User should look for a 200 result code. If received any result code other
+    than 200, the request, or the response is invalid, which means that the fields
     did not pass the checks of validation from payku. We use features included in
-    the HTTP protocol, such as authentication, which are supported by the most HTTP 
+    the HTTP protocol, such as authentication, which are supported by the most HTTP
     clients.
 
     # Authentication
-    Payku uses Token Based Authentication over HTTPS for authentication. To have 
-    access to our API, access your account in the section of Integration you will 
-    find the option of integration and API tokens. The request Unauthenticated or 
+    Payku uses Token Based Authentication over HTTPS for authentication. To have
+    access to our API, access your account in the section of Integration you will
+    find the option of integration and API tokens. The request Unauthenticated or
     incorrect will return an Invalid token response.
 
-    # API Security 
+    # API Security
     Each request is required to have included in the header:
       - Authorization: Bearer **TOKEN-PÃšBLICO**
 
     # Signature
-    In the case of the subscription and Mall API, an additional layer of security was added 
+    In the case of the subscription and Mall API, an additional layer of security was added
     through of a signature that is sent in the request header, to obtain said signature
     is necessary the following:
 
-    The Request Path must be concatenated in url format along with all the request 
-    parameters, which must be ordered alphabetically by key, such that key = value. 
-    Therefore, if the client email value is "example@domain.com" the correct format 
+    The Request Path must be concatenated in url format along with all the request
+    parameters, which must be ordered alphabetically by key, such that key = value.
+    Therefore, if the client email value is "example@domain.com" the correct format
     would be "example% 40domain.com" and then concatenated with the character '&'.
 
-    Once the character sets are ordered and concatenated, the hash is calculated 
+    Once the character sets are ordered and concatenated, the hash is calculated
     using the HMAC function with encryption type sha256, and the private token.
 
     ### PHP Example
@@ -54,16 +54,16 @@ info:
     Sorting the parameters:
     ```php
     $data = [
-      'email' => 'support@youwebsite.cl', 
-      'name' => 'Joe Doe', 
-      'phone' => '923122312', 
-      'address' => 'Moneda 101', 
-      'country' => 'Chile', 
-      'region' => 'Metropolitana', 
-      'city' => 'Santiago', 
+      'email' => 'support@youwebsite.cl',
+      'name' => 'Joe Doe',
+      'phone' => '923122312',
+      'address' => 'Moneda 101',
+      'country' => 'Chile',
+      'region' => 'Metropolitana',
+      'city' => 'Santiago',
       'postal_code' => '850000',
       'additional_parameters' => [
-        'parameter_1' => 'example', 
+        'parameter_1' => 'example',
         'parameter_2' => 'example 2',
       ]
     ];
@@ -264,6 +264,11 @@ info:
             <td align="center">Generate approved transactions.</td>
           </tr>
           <tr>
+            <td>AMEX</td>
+            <td align="center">3700 0000 0002 032 CVV 1234 any expiration date</td>
+            <td align="center">Generate approved transactions.</td>
+          </tr>
+          <tr>
             <td>MASTERCARD</td>
             <td align="center">5186 0595 5959 0568 CVV 123 any expiration date</td>
             <td align="center">Generate declined transactions.</td>
@@ -277,6 +282,16 @@ info:
             <td>Redcompra</td>
             <td>5186 0085 4123 3829</td>
             <td align="center">Generates rejected transactions (for operations that allow Redcompra debit and prepayment)</td>
+          </tr>
+          <tr>
+            <td>Prepago VISA</td>
+            <td>4051 8860 0005 6590 CVV 123 any expiration date</td>
+            <td align="center">Generate declined transactions.</td>
+          </tr>
+          <tr>
+            <td>Prepago MASTERCARD</td>
+            <td>5186 1741 1062 9480 CVV 123 any expiration date</td>
+            <td align="center">Generate declined transactions.</td>
           </tr>
         </tbody>
       </table>
@@ -305,7 +320,7 @@ tags:
           <a target='_blank' href='/assets/Diagrama-Transaction.png' class='text'>View</a>
         </div>
       </div>
-  - name: Escrow Transaction 
+  - name: Escrow Transaction
     description: This functionality will allow escrow accounts authorized by Payku to settle transactions.
   - name: Marketplace
     description: |
@@ -320,7 +335,7 @@ tags:
   - name: Mall
     description: |
       The product has been specially designed for those integrating companies of different brands with different lines of business which can be grouped while maintaining their diversity in the same virtual space or mall.
-      
+
       Offering the possibility of grouping the payment of purchases made in multiple virtual stores in a single transaction.
       <br>
       <div class='container'>
@@ -346,13 +361,507 @@ tags:
       It is the set of methods that will allow our users to create clients, plans, subscriptions and carry out consumer plan transactions.
 
       The main use of these methods is to make one-time charges to a customer for a service or product, such as hiring a delivery service for a product or the purchase of a particular product.
+  - name: Wallet
+    description: With this Wallet method you can create your wallet in **Payku**.
 
 paths:
+
+  /api/wallet/payout:
+    post:
+      tags:
+        - Wallet
+      summary: Make payments to third parties from my wallet
+      description:
+        This method allows you to create a payment order to a third party using the funds in your wallet virtual **payku**.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletResponse"
+        "400":
+          description: Request failed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: Incorrect public token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
+      x-codeSamples:
+        - lang: "cURL"
+          source: |
+            curl -X POST \
+            https://BASE-URL/api/wallet/payout \
+            -H 'Accept: application/json, text/plain, */*' \
+            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE-URL' \
+            -d '{
+              "email": "example@payku.cl",
+              "phone": "123456789",
+              "subject": "subject",
+              "currency": "CLP",
+              "order": 133222,
+              "amount":  1000,
+              "accountbank_name": "example name",
+              "accountbank_rut": "111111111",
+              "accountbank_sbif": "0001",
+              "accountbank_type": "1",
+              "accountbank_num": "12312312312"
+            }'
+        - lang: "PHP"
+          source: |
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/wallet/payout', [
+                'json' => [
+                    'email' => 'example@payku.cl',
+                    'phone' => '123456789',
+                    'subject' => 'subject',
+                    'order' => 133222,
+                    'currency' => 'CLP',
+                    'amount' =>  1000,
+                    'accountbank_name' => 'example name',
+                    'accountbank_rut' => '111111111',
+                    'accountbank_sbif' => '0001',
+                    'accountbank_type' => '1',
+                    'accountbank_num' => '12312312312'
+                  ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
+            $response = json_decode($body);
+        - lang: "JS"
+          source: |
+            const request = async (data) => {
+              const response = await fetch('https://BASE_URL/api/walet/payout', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                },
+                body: JSON.stringify(data)
+              });
+              const result = await response.json();
+              console.log(result)
+            }
+
+            let data = {
+              "email": "example@payku.cl",
+              "phone": "123456789",
+              "subject": "subject",
+              "currency": "CLP",
+              "order": 133222,
+              "amount":  1000,
+              "accountbank_name": "example name",
+              "accountbank_rut": "111111111",
+              "accountbank_sbif": "0001",
+              "accountbank_type": "1",
+              "accountbank_num": "12312312312"
+            };
+
+            request(data);
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: Client email
+                  type: string
+                  format: email
+                  example: "support@youwebsite.cl"
+                phone:
+                  description: Client phone
+                  type: string
+                  example: "923122312"
+                subject:
+                  description: Order Description
+                  type: string
+                  example: test subject
+                currency:
+                  description: Currency
+                  type: string
+                  example: "CLP"
+                order:
+                  description: E-commerce order
+                  type: integer
+                  example: 98745
+                amount:
+                  description: Order amount
+                  type: integer
+                  example: 25000
+                accountbank_name:
+                  description: Name of the destination account holder
+                  type: string
+                  example: José Manuel Muñoz Alarcon
+                accountbank_rut:
+                  description: Rut of the destination account holder
+                  type: string
+                  example: 111111111
+                accountbank_sbif:
+                  description: |
+                                Code of the bank to which the bank account belongs.
+                                  - 0001 Banco de Chile
+                                  - 0009 Banco Internacional
+                                  - 0014 Scotiabank Chile
+                                  - 0016 Banco de crédito e inversiones (BCI)
+                                  - 0027 Banco Corpbanca
+                                  - 0028 Banco Bice
+                                  - 0031 HSBC Bank Chile
+                                  - 0037 Banco Santander Chile
+                                  - 0039 Itaú Corpbanca
+                                  - 0049 Banco Security
+                                  - 0051 Banco Falabella
+                                  - 0053 Banco Ripley
+                                  - 0054 Rabobank Chile
+                                  - 0055 Banco Consorcio
+                                  - 0056 Banco Penta
+                                  - 0057 Banco Paris
+                                  - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
+                                  - 0059 Banco BTG Pactual Chile
+                  type: string
+                  example: "0001"
+                accountbank_type:
+                  description: |
+                    Account type.
+                    - 1 Corriente
+                    - 2 Vista/Cuenta RUT
+                    - 3 Ahorro
+                  type: string
+                  example: "1"
+                accountbank_num:
+                  description: Customer account number
+                  type: string
+                  example: "12312312312"
+              required:
+                - email
+                - phone
+                - subject
+                - currency
+                - order
+                - amount
+                - accountbank_name
+                - accountbank_rut
+                - accountbank_sbif
+                - accountbank_type
+                - accountbank_num
+
+  /api/wallet/withdraw:
+    post:
+      tags:
+        - Wallet
+      summary: Withdraw money from my wallet
+      description:
+        This method allows you to create a settlement to the merchant's bank account using the funds from your virtual wallet **payku**.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletResponse"
+        "400":
+          description: Request failed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: Incorrect public token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
+      x-codeSamples:
+        - lang: "cURL"
+          source: |
+            curl -X POST \
+            https://BASE-URL/api/wallet/withdraw \
+            -H 'Accept: application/json, text/plain, */*' \
+            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE-URL' \
+            -d '{
+              "subject": "subject",
+              "currency": "CLP",
+              "order": 133222,
+              "amount":  1000
+            }'
+        - lang: "PHP"
+          source: |
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/wallet/withdraw', [
+                'json' => [
+                    'subject' => 'subject',
+                    'order' => 133222,
+                    'currency' => 'CLP',
+                    'amount' =>  1000
+                  ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
+            $response = json_decode($body);
+        - lang: "JS"
+          source: |
+            const request = async (data) => {
+              const response = await fetch('https://BASE_URL/api/walet/withdraw', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                },
+                body: JSON.stringify(data)
+              });
+              const result = await response.json();
+              console.log(result)
+            }
+
+            let data = {
+              "amount":  1000,
+              "currency": "CLP",
+              "order": 133222,
+              "subject": "subject"
+            };
+
+            request(data);
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  description: Order Description
+                  type: string
+                  example: test subject
+                currency:
+                  description: Currency
+                  type: string
+                  example: "CLP"
+                order:
+                  description: E-commerce order
+                  type: integer
+                  example: 98745
+                amount:
+                  description: order amount
+                  type: integer
+                  example: 25000
+              required:
+                - subject
+                - order
+                - amount
+                - currency
+
+  /api/wallet:
+    get:
+      tags:
+        - Wallet
+      summary: "Get balance"
+      description: |
+                    This method allows you to obtain the balance of your virtual wallet **payku**.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletResponseGet"
+        "400":
+          description: Request failed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400get"
+        "401":
+          description: Incorrect public token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "404":
+          description: Identifier does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+      x-codeSamples:
+        - lang: "CURL"
+          source: |
+            curl -X GET \
+            https://BASE-URL/api/wallet  \
+            -H 'Accept: application/json, text/plain, */*' \
+            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE-URL' \
+        - lang: "PHP"
+          source: |
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/wallet', [
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
+            $response = json_decode($body);
+        - lang: "JS"
+          source: |
+            const request = async () => {
+              const response = await fetch('https://BASE_URL/api/wallet', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                },
+              });
+              const result = await response.json();
+              console.log(result)
+            }
+
+            request();
+
+  /api/wallet/list:
+    get:
+      tags:
+        - Wallet
+      summary: "get moves"
+      description: |
+                  This method allows you to obtain the movements of your virtual wallet **payku**, this method allows pagination with a maximum of 4000 records per page, In addition, it has the following filters:
+
+                  For pagination it is necessary to add the following at the end of the endpoint ?page=1&per_page=100 being the first parameter the number of the page and the second the number of records per page As for example: **api/wallet/list?page=1&per_page=100**.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletResponseGet"
+        "400":
+          description: Request failed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400get"
+        "401":
+          description: Incorrect public token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "404":
+          description: Identifier does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+      x-codeSamples:
+        - lang: "CURL"
+          source: |
+            curl -X GET \
+            https://BASE-URL/api/wallet/list  \
+            -H 'Accept: application/json, text/plain, */*' \
+            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE-URL' \
+        - lang: "PHP"
+          source: |
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/wallet/list', [
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
+            $response = json_decode($body);
+        - lang: "JS"
+          source: |
+            const request = async () => {
+              const response = await fetch('https://BASE_URL/api/wallet/list', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                },
+              });
+              const result = await response.json();
+              console.log(result)
+            }
+
+            request();
+
+  /api/wallet/{identificadorWallet}:
+    get:
+      tags:
+        - Wallet
+      summary: "Get move"
+      description: |
+        This method allows to obtain a movement of your virtual wallet **payku** using an identifier:
+
+        To perform the query it is necessary to add the following at the end of the endpoint /{identificadorWallet} for example: **api/wallet/wa24bg36767**.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletResponseGet"
+        "400":
+          description: Request failed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400get"
+        "401":
+          description: Incorrect public token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "404":
+          description: Identifier does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error404"
+      x-codeSamples:
+        - lang: "CURL"
+          source: |
+            curl -X GET \
+            https://BASE-URL/api/wallet/{idWallet}  \
+            -H 'Accept: application/json, text/plain, */*' \
+            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE-URL' \
+        - lang: "PHP"
+          source: |
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/wallet/{idWallet}', [
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
+            $response = json_decode($body);
+        - lang: "JS"
+          source: |
+            const request = async () => {
+              const response = await fetch('https://BASE_URL/api/wallet/{idWallet}', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                },
+              });
+              const result = await response.json();
+              console.log(result)
+            }
+
+            request();
+
 
   /api/escrow:
     post:
       tags:
-        - Escrow Transaction 
+        - Escrow Transaction
       summary: Authorize settlement
       description:
         This method allows authorizing the settlement of one or more transactions using their identifier, so that they can be deposited in the client's wallet or bank account.
@@ -363,13 +872,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/EscrowResponse"
         "400":
-          description: Error en la solicitud.
+          description: Request failed.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error400"
         "401":
-          description: Token PÃºblico incorrecto.
+          description: Incorrect public token.
           content:
             application/json:
               schema:
@@ -388,15 +897,15 @@ paths:
             }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/escrow', [
-                'json' => [                
-                  'transactions' => ['trx3b4d77b43acd9a720','trx3b4d77b43acd9a385'], 
-                  ],  
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                'json' => [
+                  'transactions' => ['trx3b4d77b43acd9a720','trx3b4d77b43acd9a385'],
+                  ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -404,8 +913,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/escrow', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
                 body: JSON.stringify(data)
               });
@@ -429,7 +938,7 @@ paths:
                   description: Arrangement containing the identifier of each of the transactions to be authorized for settlement.
                   type: array
                   example: ['trx3b4d77b43acd9a720','trx3b4d77b43acd9a385']
-                
+
   /api/suclient/:
     post:
       tags:
@@ -460,11 +969,11 @@ paths:
             curl -X POST \
             https://BASE_URL/api/suclient \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "email": "joedoe@gmail.com",
                 "name": "Joe Doe",
                 "rut": "111111111",
@@ -476,33 +985,33 @@ paths:
                 "postal_code": "850000,
                 "additional_parameters":{
                   "parameter_1": "example 1",
-                  "parameter_2": "example 2", 
+                  "parameter_2": "example 2",
                 }
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/suclient', [
-                'json' => [                
-                  'email' => 'joedoe@gmail.cl', 
+                'json' => [
+                  'email' => 'joedoe@gmail.cl',
                   'name' => 'Joe Doe',
-                  'rut' => '111111111', 
-                  'phone' => '923122312', 
-                  'address' => 'Moneda 101', 
-                  'country' => 'Chile', 
-                  'region' => 'Metropolitana', 
-                  'city' => 'Santiago', 
+                  'rut' => '111111111',
+                  'phone' => '923122312',
+                  'address' => 'Moneda 101',
+                  'country' => 'Chile',
+                  'region' => 'Metropolitana',
+                  'city' => 'Santiago',
                   'postal_code' => '850000',
                   'additional_parameters' => [
-                      'parameter_1' => 'example', 
+                      'parameter_1' => 'example',
                       'parameter_2' => 'example 2'
                     ]
-                  ],  
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                  ],
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -511,8 +1020,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -532,7 +1041,7 @@ paths:
               postal_code: "850000",
               additional_parameters:{
                 parameter_1: "example",
-                parameter_2: "example 2",  
+                parameter_2: "example 2",
               }
             };
 
@@ -585,7 +1094,7 @@ paths:
                   type: object
                   properties:
                     parameter_1:
-                      description: Client additional parameter 
+                      description: Client additional parameter
                       type: string
                       example: "example"
                     parameter_2:
@@ -627,26 +1136,26 @@ paths:
             curl -X POST \
             https://BASE_URL/api/suplan \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "name": "Test plan",
                 "description": "Test Plan"
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('POST', 'https://BASE_URL/api/suplan', [             
-                'json' => [       
-                  'name' => 'Test plan',    
-                  'description' => 'Test Plan'         
-                  ],             
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]           
-                  ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/suplan', [
+                'json' => [
+                  'name' => 'Test plan',
+                  'description' => 'Test Plan'
+                  ],
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                  ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -655,8 +1164,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -737,27 +1246,27 @@ paths:
             curl -X POST \
             https://BASE_URL/api/sususcription \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "plan": "pl9697fb170834ad42dd00",
                 "client": "cl9b1e1dd988694f30fa30"
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('POST', 'https://BASE_URL/api/sususcription, [             
-                'json' => [                
-                  'plan' => 'pl9697fb170834ad42dd00', 
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/sususcription, [
+                'json' => [
+                  'plan' => 'pl9697fb170834ad42dd00',
                   'client' => ' cl9b1e1dd988694f30fa30',
-                  ], 
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                  ]           
-                ])->getBody();           
+                  ],
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  ]
+                ])->getBody();
               $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -766,8 +1275,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -832,11 +1341,11 @@ paths:
             curl -X POST \
             https://BASE_URL/api/sutransaction \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "suscription": "sucaab7865dceaff49d8b3",
                 "amount": "10000",
                 "order": "001",
@@ -844,19 +1353,19 @@ paths:
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('POST', 'https://BASE_URL/api/sutransaction, [             
-                'json' => [                
-                  'suscription' => sucaab7865dceaff49d8b3, 
-                  'order' => '001', 
-                  'monto' => '10000', 
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/sutransaction, [
+                'json' => [
+                  'suscription' => sucaab7865dceaff49d8b3,
+                  'order' => '001',
+                  'monto' => '10000',
                   'description' => 'Description'
-                  ], 
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                  ]           
-                ])->getBody();           
+                  ],
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  ]
+                ])->getBody();
               $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -865,8 +1374,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -937,11 +1446,11 @@ paths:
             curl -X POST \
             https://BASE_URL/api/suclient \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "email": "joedoe@gmail.com",
                 "name": "Joe Doe",
                 "rut": "111111111",
@@ -953,33 +1462,33 @@ paths:
                 "postal_code": "850000,
                 "additional_parameters":{
                   "parameter_1": "example",
-                  "parameter_2": "example 2", 
+                  "parameter_2": "example 2",
                 }
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/suclient', [
-                'json' => [                
-                  'email' => 'joedoe@gmail.cl', 
-                  'name' => 'Joe Doe', 
+                'json' => [
+                  'email' => 'joedoe@gmail.cl',
+                  'name' => 'Joe Doe',
                   'rut' => '111111111',
-                  'phone' => '923122312', 
-                  'address' => 'Moneda 101', 
-                  'country' => 'Chile', 
-                  'region' => 'Metropolitana', 
-                  'city' => 'Santiago', 
+                  'phone' => '923122312',
+                  'address' => 'Moneda 101',
+                  'country' => 'Chile',
+                  'region' => 'Metropolitana',
+                  'city' => 'Santiago',
                   'postal_code' => '850000',
                   'additional_parameters' => [
-                      'parameter_1' => 'example', 
+                      'parameter_1' => 'example',
                       'parameter_2' => 'example 2'
                     ]
-                  ],  
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                  ],
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -988,8 +1497,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -1009,7 +1518,7 @@ paths:
               postal_code: "850000",
               additional_parameters:{
                 parameter_1: "example",
-                parameter_2: "example 2", 
+                parameter_2: "example 2",
               }
             };
 
@@ -1062,7 +1571,7 @@ paths:
                   type: object
                   properties:
                     parameter_1:
-                      description: Client additional parameter 
+                      description: Client additional parameter
                       type: string
                       example: "example"
                     parameter_2:
@@ -1112,19 +1621,19 @@ paths:
             curl -X GET \
             https://BASE_URL/api/suclient/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/suclient/cla90927fa9b30e1dfffa0', [                    
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/suclient/cla90927fa9b30e1dfffa0', [
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1133,8 +1642,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -1180,11 +1689,11 @@ paths:
             curl -X PUT \
             https://BASE_URL/api/suclient/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "email": "joedoe@gmail.com",
                 "name": "Joe Doe Doe",
                 "phone": "923122312",
@@ -1195,33 +1704,33 @@ paths:
                 "postal_code": "750000",
                 "additional_parameters":{
                   "parameter_1": "example",
-                  "parameter_2": "example 2", 
+                  "parameter_2": "example 2",
                 }
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('PUT', 'https://BASE_URL//api/suclient/cla90927fa9b30e1dfffa0', [             
-                'json' => [          
-                  'email' => 'joedoe@gmail.com', 
-                  'name' => 'Joe Doe Doe', 
-                  'phone' => '923122312', 
-                  'address' => 'Moneda 121', 
-                  'country' => 'Chile', 
-                  'region'  => 'Metropolitana', 
-                  'city'    => 'Santiago', 
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('PUT', 'https://BASE_URL//api/suclient/cla90927fa9b30e1dfffa0', [
+                'json' => [
+                  'email' => 'joedoe@gmail.com',
+                  'name' => 'Joe Doe Doe',
+                  'phone' => '923122312',
+                  'address' => 'Moneda 121',
+                  'country' => 'Chile',
+                  'region'  => 'Metropolitana',
+                  'city'    => 'Santiago',
                   'postal_code' => '750000',
                   'additional_parameters' => [
-                    'parameter_1' => 'example', 
+                    'parameter_1' => 'example',
                     'parameter_2' => 'example 2'
                   ]
-                ],  
-              ],             
-              'headers' => [                 
-                'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-              ]           
-            ])->getBody();           
+                ],
+              ],
+              'headers' => [
+                'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+              ]
+            ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1230,8 +1739,8 @@ paths:
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -1250,7 +1759,7 @@ paths:
               postal_code: "750000",
               additional_parameters:{
                 parameter_1: "example",
-                parameter_2: "example 2", 
+                parameter_2: "example 2",
               }
             };
 
@@ -1299,7 +1808,7 @@ paths:
                   type: object
                   properties:
                     parameter_1:
-                      description: Client additional parameter 
+                      description: Client additional parameter
                       type: string
                       example: "example"
                     parameter_2:
@@ -1344,18 +1853,18 @@ paths:
             curl -X DELETE \
             https://BASE_URL/api/suclient/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('DELETE', 'https://BASE_URL/api/suclient/cla90927fa9b30e1dfffa0', [             
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]           
-                  ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('DELETE', 'https://BASE_URL/api/suclient/cla90927fa9b30e1dfffa0', [
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                  ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1364,8 +1873,8 @@ paths:
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -1406,19 +1915,19 @@ paths:
             curl -X GET \
             https://BASE_URL/api/suclient/customers \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/suclient/customers', [                      
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/suclient/customers', [
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1427,8 +1936,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -1467,27 +1976,27 @@ paths:
             curl -X POST \
             https://BASE_URL/api/sususcription \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "plan": "pl9697fb170834ad42dd00",
                 "client": "cl9b1e1dd988694f30fa30"
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('POST', 'https://BASE_URL/api/sususcription, [             
-                'json' => [                
-                  'plan' => 'pl9697fb170834ad42dd00', 
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/sususcription, [
+                'json' => [
+                  'plan' => 'pl9697fb170834ad42dd00',
                   'client' => ' cl9b1e1dd988694f30fa30',
-                  ], 
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                  ]           
-                ])->getBody();           
+                  ],
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  ]
+                ])->getBody();
               $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1496,8 +2005,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -1563,19 +2072,19 @@ paths:
             curl -X GET \
             https://BASE_URL/api/suclient/customers \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/suclient/customers', [                      
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/suclient/customers', [
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1584,8 +2093,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -1632,11 +2141,11 @@ paths:
             curl -X POST \
             https://BASE_URL/api/sutransaction \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "suscription": "sucaab7865dceaff49d8b3",
                 "amount": "10000",
                 "order": "001",
@@ -1644,19 +2153,19 @@ paths:
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('POST', 'https://BASE_URL/api/sutransaction, [             
-                'json' => [                
-                  'suscription' => sucaab7865dceaff49d8b3, 
-                  'order' => '001', 
-                  'monto' => '10000', 
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/sutransaction, [
+                'json' => [
+                  'suscription' => sucaab7865dceaff49d8b3,
+                  'order' => '001',
+                  'monto' => '10000',
                   'description' => ' descripcion'
-                  ], 
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                  ]           
-                ])->getBody();           
+                  ],
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  ]
+                ])->getBody();
               $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1665,8 +2174,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -1745,19 +2254,19 @@ paths:
             curl -X GET \
             https://BASE_URL/api/sususcription/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/sususcription/sucaab7865dceaff49d8b', [                          
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/sususcription/sucaab7865dceaff49d8b', [
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1766,8 +2275,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -1812,18 +2321,18 @@ paths:
             curl -X DELETE \
             https://BASE_URL/api/sususcription/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('DELETE', 'https://BASE_URL/api/sususcription/sucaab7865dceaff49d8b3, [                          
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]           
-                  ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('DELETE', 'https://BASE_URL/api/sususcription/sucaab7865dceaff49d8b3, [
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                  ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1832,8 +2341,8 @@ paths:
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -1849,7 +2358,7 @@ paths:
       summary: Affiliate card to subscription
       description: |
         This method allows the insertion of the data of a subscription card.
-        
+
         **Important**
 
         In case you need to renew your client's card. this method will allow you to add a new card to the subscription.
@@ -1880,24 +2389,24 @@ paths:
             curl -X POST \
             https://BASE_URL/api/suinscriptionscards \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "suscription": "sucaab7865dceaff49d8b3"
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('POST', 'https://BASE_URL/api/suinscriptionscards', [             
-                'json' => [       
-                  'suscription' => sucaab7865dceaff49d8b3,             
-                  ],             
-                  'headers' => [                 
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]           
-                  ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/suinscriptionscards', [
+                'json' => [
+                  'suscription' => sucaab7865dceaff49d8b3,
+                  ],
+                  'headers' => [
+                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                  ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1906,8 +2415,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -1971,19 +2480,19 @@ paths:
             curl -X GET \
             https://BASE_URL/api/suplan/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/suplan/pl29f6ad69fbd594148c39', [                    
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/suplan/pl29f6ad69fbd594148c39', [
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -1992,8 +2501,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -2032,19 +2541,19 @@ paths:
             curl -X GET \
             https://BASE_URL/api/suplan/plans \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN'  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/suplan/plans', [                       
-                'headers' => [                 
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/suplan/plans', [
+                'headers' => [
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2053,8 +2562,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',                 
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -2137,21 +2646,21 @@ paths:
             }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/transaction', [
-                'json' => [                
-                  'email' => 'joedoe@gmail.cl', 
-                  'order' => 98745, 
+                'json' => [
+                  'email' => 'joedoe@gmail.cl',
+                  'order' => 98745,
                   'subject' => 'Client Test',
-                  'amount' => 25000,  
-                  'payment' => 1, 
+                  'amount' => 25000,
+                  'payment' => 1,
                   'urlreturn' => 'https://youwebsite.com/urlreturn?orderClient=123',
                   'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123'
-                  ],  
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                  ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2159,8 +2668,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/transaction', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
                 body: JSON.stringify(data)
               });
@@ -2215,7 +2724,7 @@ paths:
                     - 9 Mach
                     - 11 Khipu
                     - 12 Chek
-                    - 99 All  
+                    - 99 All
                   type: integer
                   example: 1
                 urlreturn:
@@ -2274,12 +2783,12 @@ paths:
             -H 'Host: BASE-URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/transaction', [
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2287,8 +2796,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/transaction', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
               });
               const result = await response.json();
@@ -2346,12 +2855,12 @@ paths:
             -H 'Host: BASE-URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/transaction/10ac494c1d8da71d98ea', [
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2359,8 +2868,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/transaction/10ac494c1d8da71d98ea', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
               });
               const result = await response.json();
@@ -2369,7 +2878,7 @@ paths:
 
             request();
 
-  /api/verificar:
+  /api/verificar      <-DEPRECATED->:
     post:
       tags:
         - Transaction
@@ -2425,45 +2934,45 @@ paths:
             curl -X POST \
               https://BASE_URL/api/event \
               -H 'Accept: application/json, text/plain, */*' \
-              -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-              -H 'Content-Type: application/json,application/json' \   
-              -H 'Host: BASE_URL' \   
-              -d {     
-                "name": "Event",     
-                "event": "98374",     
-                "date_event": "2020-12-20",     
-                "date_payment": "2020-12-22",     
-                "date_closing_sales": "2020-12-19 23:59:00",     
-                "url_logo": "https://example.cl/logo_event1.png",     
-                "url_event": "https://example.cl/event1",     
-                "service_sale": 10,     
+              -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+              -H 'Content-Type: application/json,application/json' \
+              -H 'Host: BASE_URL' \
+              -d {
+                "name": "Event",
+                "event": "98374",
+                "date_event": "2020-12-20",
+                "date_payment": "2020-12-22",
+                "date_closing_sales": "2020-12-19 23:59:00",
+                "url_logo": "https://example.cl/logo_event1.png",
+                "url_event": "https://example.cl/event1",
+                "service_sale": 10,
                 "affiliation": [
-                  ["afiliate1@gmail.com",  50], 
+                  ["afiliate1@gmail.com",  50],
                   ["afiliate2@gmail.com",  50]
-                ] 
+                ]
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/event', [
-                'json' => [                
-                    'name' => 'Event',     
-                    'event' => '98374',     
-                    'date_event' => '2020-12-20',     
-                    'date_payment' => '2020-12-22',     
-                    'date_closing_sales' => '2020-12-19 23:59:00',     
-                    'url_logo' => 'https://example.cl/logo_event1.png',     
-                    'url_event' => 'https://example.cl/event1',     
-                    'service_sale' => 10,     
+                'json' => [
+                    'name' => 'Event',
+                    'event' => '98374',
+                    'date_event' => '2020-12-20',
+                    'date_payment' => '2020-12-22',
+                    'date_closing_sales' => '2020-12-19 23:59:00',
+                    'url_logo' => 'https://example.cl/logo_event1.png',
+                    'url_event' => 'https://example.cl/event1',
+                    'service_sale' => 10,
                     'affiliation' => [
-                      ['afiliate1@gmail.com',  50], 
+                      ['afiliate1@gmail.com',  50],
                       ['afiliate2@gmail.com',  50]
                     ]
-                  ],  
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                  ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2471,8 +2980,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/event', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
                 body: JSON.stringify(data)
               });
@@ -2481,16 +2990,16 @@ paths:
             }
 
             let data = {
-              name: "Event",     
-              event: "98374",     
-              date_event: "2020-12-20",     
-              date_payment: "2020-12-22",     
-              date_closing_sales: "2020-12-19 23:59:00",     
-              url_logo: "https://example.cl/logo_event1.png",     
-              url_event: "https://example.cl/event1",     
-              service_sale: 10,     
+              name: "Event",
+              event: "98374",
+              date_event: "2020-12-20",
+              date_payment: "2020-12-22",
+              date_closing_sales: "2020-12-19 23:59:00",
+              url_logo: "https://example.cl/logo_event1.png",
+              url_event: "https://example.cl/event1",
+              service_sale: 10,
               affiliation: [
-                ["afiliate1@gmail.com",  50], 
+                ["afiliate1@gmail.com",  50],
                 ["afiliate2@gmail.com",  50]
               ]
             };
@@ -2596,17 +3105,17 @@ paths:
             curl -X GET \
               https://BASE_URL/api/event \
               -H 'Accept: application/json, text/plain, */*' \
-              -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-              -H 'Content-Type: application/json,application/json' \   
+              -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+              -H 'Content-Type: application/json,application/json' \
               -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/event/98374', [  
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/event/98374', [
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2614,8 +3123,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/event/98374', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
               });
               const result = await response.json();
@@ -2654,10 +3163,10 @@ paths:
             curl -X POST \
             https://BASE_URL/api/maclient \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "email": "joedoe@gmail.com",
                 "name": "Joe Doe",
                 "phone": "923122312",
@@ -2670,23 +3179,23 @@ paths:
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/maclient', [
-                'json' => [                
-                  'email' => 'joedoe@gmail.com', 
-                  'name' => 'Joe Doe', 
-                  'phone' => '923122312', 
+                'json' => [
+                  'email' => 'joedoe@gmail.com',
+                  'name' => 'Joe Doe',
+                  'phone' => '923122312',
                   'bank' => [
                     "sbif" => "0001 ",
                     "type" => "1",
                     "num" => "1231123567",
                     "rut" => "111111111",
                   ]
-                ],  
-                'headers' => [                 
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2694,8 +3203,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/maclient', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',              
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -2764,8 +3273,8 @@ paths:
                     type:
                       description: |
                         Account type.
-                        - 1 Checking account 
-                        - 2 Vista/Cuenta RUT 
+                        - 1 Checking account
+                        - 2 Vista/Cuenta RUT
                         - 3 Saving account
                       type: string
                       example: "1"
@@ -2826,17 +3335,17 @@ paths:
             curl -X GET \
             https://BASE_URL/api/maclient/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [                    
-                'headers' => [                    
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2844,8 +3353,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',              
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -2890,16 +3399,16 @@ paths:
             curl -X DELETE \
             https://BASE_URL/api/maclient/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('DELETE', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [                 
-                  'headers' => [                                 
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]           
-                  ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('DELETE', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [
+                  'headers' => [
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                  ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2907,8 +3416,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', {
                 method: 'DELETE',
                 headers: {
-                  'Content-Type': 'application/json',              
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -2947,10 +3456,10 @@ paths:
             curl -X POST \
             https://BASE_URL/api/maaffiliation \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "name": "name",
                 "percentage": "20",
                 "affiliation": [
@@ -2959,19 +3468,19 @@ paths:
               }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/maclient', [
-                'json' => [                
-                  'name' => 'name', 
-                  'percentage' => '20',  
+                'json' => [
+                  'name' => 'name',
+                  'percentage' => '20',
                   'affiliation' => [
                     [ma9fd16221a9645b0036,80]
                   ]
-                ],  
-                'headers' => [                                
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -2979,8 +3488,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/maaffiliation', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',              
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
                 body: JSON.stringify(data)
               });
@@ -3059,17 +3568,17 @@ paths:
             curl -X GET \
             https://BASE_URL/api/maaffiliation/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('GET', 'https://BASE_URL/api/maaffiliation/sucaab7865dceaff49d8b3', [                    
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('GET', 'https://BASE_URL/api/maaffiliation/sucaab7865dceaff49d8b3', [
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -3077,8 +3586,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/maaffiliation/sucaab7865dceaff49d8b3', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',              
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -3124,16 +3633,16 @@ paths:
             curl -X DELETE \
             https://BASE_URL/api/maaffiliation/id \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN_PUBLICO'  \   
-            -H 'Content-Type: application/json,application/json' \   
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE_URL' \
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
-              $body = $client->request('DELETE', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [                 
-                  'headers' => [                                  
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]           
-                  ])->getBody();           
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('DELETE', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [
+                  'headers' => [
+                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                  ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -3141,8 +3650,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/maaffiliation/sucaab7865dceaff49d8b3', {
                 method: 'DELETE',
                 headers: {
-                  'Content-Type': 'application/json',              
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
                 },
               });
               const result = await response.json();
@@ -3198,22 +3707,22 @@ paths:
             }'
         - lang: "PHP"
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/transaction', [
-                'json' => [                
-                  'email' => 'joedoe@gmail.cl', 
-                  'order' => 98745, 
+                'json' => [
+                  'email' => 'joedoe@gmail.cl',
+                  'order' => 98745,
                   'subject' => 'Client Test',
-                  'amount' => 25000,  
-                  'payment' => 1, 
+                  'amount' => 25000,
+                  'payment' => 1,
                   'urlreturn' => 'https://youwebsite.com/urlreturn?orderClient=123',
                   'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123',
                   'marketplace' => 'c1c879f4862d393ea6b326a313022dd98f0baa2869d3e9095c124199c9941030'
-                  ],  
-                'headers' => [                                  
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              
-                ]           
-              ])->getBody();           
+                  ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: "JS"
           source: |
@@ -3221,8 +3730,8 @@ paths:
               const response = await fetch('https://BASE_URL/api/transaction', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
                 body: JSON.stringify(data)
               });
@@ -3278,7 +3787,7 @@ paths:
                     - 9 Mach
                     - 11 Khipu
                     - 12 Chek
-                    - 99 All 
+                    - 99 All
                   type: integer
                   example: 1
                 urlreturn:
@@ -3331,11 +3840,11 @@ paths:
             curl -X POST \
             https://BASE_URL/api/mall \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Sign: SIGN  \  
-            -H 'Authorization: Bearer TOKEN_PUBLICO  \   
-            -H 'Content-Type: application/json,application/json' \   
-            -H 'Host: BASE_URL' \   
-            -d {     
+            -H 'Sign: SIGN  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
                 "email": "joedoe@gmail.com",
                 "merchant": [
                   ["81b6179e4feeef2b50af71d660f830de", "30000", "item1"],
@@ -3348,25 +3857,25 @@ paths:
               }'
         - lang: 'PHP'
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://[base URL]/api/mall', [
-                'json' => [                
-                  'email'         => 'joedoe@gmail.com',                 
+                'json' => [
+                  'email'         => 'joedoe@gmail.com',
                   'merchant'      => [
                     ['81b6179e4feeef2b50af71d660f830de', '30000', 'item1'],
                     ['bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b','25000','item2'],
                     ['3952097d617679f98c587bad0b3a781d','15000','item3']
-                  ],                                                           
-                  'order'         => 123,                              
+                  ],
+                  'order'         => 123,
                   'urlreturn'     => 'https://youwebsite.cl/urlreturn',
                   'urlnotify'     => 'https://youwebsite.cl/urlnotify'
-                  ],  
-                'headers' => [                 
-                  'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',                 
-                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'              
-                ]           
-              ])->getBody();           
-            $response = json_decode($body); 
+                  ],
+                'headers' => [
+                  'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
+                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'
+                ]
+              ])->getBody();
+            $response = json_decode($body);
         - lang: 'JS'
           source: |
             const request = async (data) => {
@@ -3374,8 +3883,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',                 
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'  
+                  'Sign': 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
                 body: JSON.stringify(data)
               });
@@ -3410,7 +3919,7 @@ paths:
                   description: Array containing the customers, each customer is an array containing their public token or marketplace affiliate id, transaction value, and description
                   items:
                     type: array
-                    example: 
+                    example:
                       - [81b6179e4feeef2b50af71d660f830de,30000,item1]
                       - [bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b,25000,item2]
                       - [3952097d617679f98c587bad0b3a781d,15000,item3]
@@ -3423,7 +3932,7 @@ paths:
                   type: string
                   format: url
                   example: https://youwebsite.cl/urlreturn
-                urlnotify: 
+                urlnotify:
                   description: callback url of the business where payku will notify the payment.
                   type: string
                   format: url
@@ -3434,7 +3943,7 @@ paths:
                 - payment
                 - order
                 - urlreturn
-                  
+
   /api/mall/{identificadorTrasaccion}:
     get:
       tags:
@@ -3484,13 +3993,13 @@ paths:
             -H 'Host: BASE-URL ' \
         - lang: 'PHP'
           source: |
-            $client = new \GuzzleHttp\Client();         
+            $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://[base URL]/api/mall/malld200058ab44739ddee2adcd2f5', [
-                'headers' => [                                  
-                  'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',                 
-                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'               
-                ]           
-              ])->getBody();           
+                'headers' => [
+                  'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
+                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'
+                ]
+              ])->getBody();
             $response = json_decode($body);
         - lang: 'JS'
           source: |
@@ -3498,9 +4007,9 @@ paths:
               const response = await fetch('https://des.payku.cl/api/mall/malld200058ab44739ddee2adcd2f5', {
                 method: 'GET',
                 headers: {
-                  'Content-Type': 'application/json',                 
-                  'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',                 
-                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d' 
+                  'Content-Type': 'application/json',
+                  'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
+                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
               });
               const result = await response.json();
@@ -3577,7 +4086,7 @@ components:
           type: object
           properties:
             parameter_1:
-              description: Client additional parameter 
+              description: Client additional parameter
               type: string
               example: "example"
             parameter_2:
@@ -3648,7 +4157,7 @@ components:
           type: object
           properties:
             parameter_1:
-              description: Client additional parameter 
+              description: Client additional parameter
               type: string
               example: "example"
             parameter_2:
@@ -3670,10 +4179,10 @@ components:
             status:
               description: |
                 Subscription status. The possible statuses you can get are the following:
-                - register   
-                - active     
-                - finish   
-                - delete    
+                - register
+                - active
+                - finish
+                - delete
                 - cancel
                 - suspended
               type: string
@@ -3819,7 +4328,7 @@ components:
           type: object
           properties:
             parameter_1:
-              description: Client additional parameter 
+              description: Client additional parameter
               type: string
               example: "example"
             parameter_2:
@@ -3841,10 +4350,10 @@ components:
             status:
               description: |
                 Subscription status. The possible statuses you can get are the following:
-                - register   
-                - active     
-                - finish   
-                - delete    
+                - register
+                - active
+                - finish
+                - delete
                 - cancel
                 - suspended
               type: string
@@ -4010,10 +4519,10 @@ components:
                   status:
                     description: |
                       Subscription status. The possible statuses you can get are the following:
-                      - register   
-                      - active     
-                      - finish   
-                      - delete    
+                      - register
+                      - active
+                      - finish
+                      - delete
                       - cancel
                       - suspended
                     type: string
@@ -4291,10 +4800,10 @@ components:
         status:
           description: |
             Transaction status The possible statuses you can get are the following:
-            - pending           
-            - success           
-            - rejected         
-            - refunded partial  
+            - pending
+            - success
+            - rejected
+            - refunded partial
             - refunded
           type: string
           example: success
@@ -4344,10 +4853,10 @@ components:
           type: string
           description: |
             Subscription status. The possible statuses you can get are the following:
-             - register   
-             - active     
-             - finish   
-             - delete    
+             - register
+             - active
+             - finish
+             - delete
              - cancel
              - suspended
           example: "active"
@@ -4447,10 +4956,10 @@ components:
               status:
                 description: |
                   Transaction status The possible statuses you can get are the following:
-                  - pending           
-                  - success           
-                  - rejected         
-                  - refunded partial  
+                  - pending
+                  - success
+                  - rejected
+                  - refunded partial
                   - refunded
                 type: string
                 example: "success"
@@ -4494,10 +5003,10 @@ components:
                 type: string
                 description: |
                   Subscription status. The possible statuses you can get are the following:
-                  - register   
-                  - active     
-                  - finish   
-                  - delete    
+                  - register
+                  - active
+                  - finish
+                  - delete
                   - cancel
                   - suspended
                 example: "active"
@@ -4602,10 +5111,10 @@ components:
                     status:
                       description: |
                         Transaction status The possible statuses you can get are the following:
-                        - pending           
-                        - success           
-                        - rejected         
-                        - refunded partial  
+                        - pending
+                        - success
+                        - rejected
+                        - refunded partial
                         - refunded
                       type: string
                       example: "success"
@@ -4640,10 +5149,10 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
-            - pending           
-            - success           
-            - rejected         
-            - refunded partial  
+            - pending
+            - success
+            - rejected
+            - refunded partial
             - refunded
           example: "pending"
         id:
@@ -4663,10 +5172,10 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
-            - pending           
-            - success           
-            - rejected         
-            - refunded partial  
+            - pending
+            - success
+            - rejected
+            - refunded partial
             - refunded
           example: "success"
         id:
@@ -4748,10 +5257,10 @@ components:
               type: string
               description: |
                 Transaction status The possible statuses you can get are the following:
-                - pending           
-                - success           
-                - rejected         
-                - refunded partial  
+                - pending
+                - success
+                - rejected
+                - refunded partial
                 - refunded
               example: "success"
             message:
@@ -4786,10 +5295,10 @@ components:
                 type: string
                 description: |
                   Transaction status The possible statuses you can get are the following:
-                  - pending           
-                  - success           
-                  - rejected         
-                  - refunded partial  
+                  - pending
+                  - success
+                  - rejected
+                  - refunded partial
                   - refunded
                 example: "success"
               created_at:
@@ -4867,10 +5376,10 @@ components:
                     type: string
                     description: |
                       Transaction status The possible statuses you can get are the following:
-                      - pending           
-                      - success           
-                      - rejected         
-                      - refunded partial  
+                      - pending
+                      - success
+                      - rejected
+                      - refunded partial
                       - refunded
                     example: "success"
                   message:
@@ -4896,10 +5405,10 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
-            - pending           
-            - success           
-            - rejected         
-            - refunded partial  
+            - pending
+            - success
+            - rejected
+            - refunded partial
             - refunded
           example: "success"
         id:
@@ -4956,7 +5465,7 @@ components:
               subject:
                 type: string
                 description: Description of the product or service.
-          example: 
+          example:
             - {name: John Doe, amount: 30000,subject: item1}
             - {name: Jane Doe, amount: 25000,subject: item2}
             - {name: Enteprise, amount: 15000,subject: item3}
@@ -4988,10 +5497,10 @@ components:
           type: string
           description: |
             Subscription status. The possible statuses you can get are the following:
-            - register   
-            - active     
-            - finish   
-            - delete    
+            - register
+            - active
+            - finish
+            - delete
             - cancel
             - suspended
           example: "active"
@@ -5016,13 +5525,13 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
-            - pending           
-            - success           
-            - rejected         
-            - refunded partial  
+            - pending
+            - success
+            - rejected
+            - refunded partial
             - refunded
           example: "success"
-    
+
     NotifyPaymentSuscriptionResponse:
       description: "Return data from the payment of a subscription"
       type: object
@@ -5043,10 +5552,10 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
-            - pending           
-            - success           
-            - rejected         
-            - refunded partial  
+            - pending
+            - success
+            - rejected
+            - refunded partial
             - refunded
           example: "success"
         subscriptions:
@@ -5361,10 +5870,10 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
-            - pending           
-            - success           
-            - rejected         
-            - refunded partial  
+            - pending
+            - success
+            - rejected
+            - refunded partial
             - refunded
           example: "success"
         id:
@@ -5522,3 +6031,159 @@ components:
           type: string
           description: Id information
           example: is not valid
+
+    WalletResponse:
+      description: "Return data of the load to the wallet"
+      type: object
+      properties:
+        status:
+          type: string
+          description: |
+          Status of the load to the wallet. The possible statuses that can be obtained are the following:
+            - success
+          example: "Success"
+        identifier_wallet:
+          type: string
+          description: payku virtual wallet movement identifier.
+          example: "wab5f7232dafff18f9"
+
+    WalletResponseGet:
+      description: "Return data of the load to the wallet"
+      type: object
+      properties:
+        status:
+          type: string
+          description: |
+          Status of the load to the wallet. The possible statuses that can be obtained are the following:
+            - success
+          example: "Success"
+        current_id:
+          type: string
+          description: Payku virtual wallet identifier.
+          example: "wa8a6171ab83323c37"
+        amount_available:
+          type: integer
+          description: Amount available in Payku's virtual wallet.
+          example: 1766
+        currency:
+          type: string
+          description: Currency.
+          example: "CLP"
+        filter:
+          type: object
+          description: Specific data to filter the data.
+          properties:
+            page:
+              type: integer
+              description: Actual page.
+              example: 1
+            per_page:
+              type: integer
+              description: Number of moves per page.
+              example: 1000
+            currency:
+              type: string
+              description: Currency.
+              example: "CLP"
+            id:
+              type: string
+              description: Wallet account identifier.
+              example: "wa8a6171ab83323c37"
+        wallet_movements:
+          type: array
+          items:
+            type: object
+            description: Collection object for a collection batch.
+            properties:
+              id:
+                type: string
+                description: Virtual wallet identifier.
+                example: "wa8a6171ab83323c37"
+              order:
+                type: string
+                description: Order identifier.
+                example: "tme5"
+              subject:
+                type: string
+                description: Description of the movement.
+                example: "tme5 asunto"
+              created_at:
+                type: string
+                description: Movement execution date.
+                example: "2022-06-09 20:07:02"
+              income_expense:
+                type: string
+                description: Payment to a third party or withdrawal to your account.
+                example: "expense"
+              status:
+                type: string
+                description: Movement status.
+                example: "current"
+              amount:
+                type: string
+                description: Movement amount.
+                example: "3680"
+              actual_amount:
+                type: string
+                description: Current Balance Amount.
+                example: "1766"
+              origin_liquidation:
+                type: string
+                description: Origin of settlement.
+                example: null
+              currency:
+                type: string
+                description: Currency.
+                example: "CLP"
+              payout:
+                type: object
+                description: Destination account data.
+                properties:
+                  id:
+                    type: string
+                    description: Destination account identifier.
+                    example: "war3999847529816f2"
+                  phone:
+                    type: string
+                    description: Telephone of the destination account holder.
+                    example: "111111111"
+                  email:
+                    type: string
+                    description: Destination account holder's email.
+                    example: "test@test.cl"
+                  subject:
+                    type: string
+                    description: Application Status.
+                    example: "subject order"
+                  amount:
+                    type: string
+                    description: Amount to be deposited in the destination account.
+                    example: "1000"
+                  accountbank_rut:
+                    type: string
+                    description: Rut of the destination account holder.
+                    example: "111111111"
+                  accountbank_name:
+                    type: string
+                    description: Name of the destination account holder.
+                    example: "test"
+                  accountbank_type:
+                    type: integer
+                    description: Type of account of the destination bank.
+                    example: 1
+                  accountbank_num:
+                    type: integer
+                    description: Destination bank account number.
+                    example: 123123123
+                  accountbank_sbif:
+                    type: string
+                    description: Code of the bank to which the bank account belongs.
+                    example: "0001"
+                  status:
+                    type: string
+                    description: Movement status.
+                    example: "pending"
+                  update_at:
+                    type: string
+                    description: Date the request was made.
+                    example: "2022-06-09 21:10:46"
