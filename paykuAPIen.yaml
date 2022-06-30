@@ -156,7 +156,7 @@ info:
           <td style="text-align: right"><strong class="errorTitle">401</strong>
             <p class="psmall">Unauthorized</p>
           </td>
-          <td class="errorDescription">Your token is incorrect</td>
+          <td class="errorDescription">Your token is incorrect or signature is incorrect</td>
         </tr>
         <tr>
           <td style="text-align: right"><strong class="errorTitle">403</strong>
@@ -244,7 +244,7 @@ info:
     -	Production: provides direct access to generate actual transactions.
     - Sandbox: allows you to test your integration without affecting the actual data.
 
-    # Test transactions with Webpay
+    # Test Card
 
     For Webpay transactions in this environment these cards must be used:
 
@@ -2701,8 +2701,8 @@ paths:
                   example: joedoe@gmail.com
                 order:
                   description: Trade order.
-                  type: integer
-                  example: 98745
+                  type: string
+                  example: "98745"
                 subject:
                   description: Description of the order.
                   type: string
@@ -3915,14 +3915,12 @@ paths:
                   format: email
                   example: joedoe@gmail.com
                 merchant:
-                  type: array
+                  type: array of arrays
                   description: Array containing the customers, each customer is an array containing their public token or marketplace affiliate id, transaction value, and description
-                  items:
-                    type: array
-                    example:
-                      - [81b6179e4feeef2b50af71d660f830de,30000,item1]
-                      - [bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b,25000,item2]
-                      - [3952097d617679f98c587bad0b3a781d,15000,item3]
+                  example:
+                    - [81b6179e4feeef2b50af71d660f830de,30000,item1]
+                    - [bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b,25000,item2]
+                    - [3952097d617679f98c587bad0b3a781d,15000,item3]
                 order:
                   description: Trade order, this must be unique.
                   type: integer
