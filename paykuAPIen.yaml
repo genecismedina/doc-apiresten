@@ -5947,7 +5947,7 @@ components:
         message_error:
           type: string
           description: Error message.
-          example: Array\n(\n    [order] => invalid\n)\n
+          example: subject:invalid,amount:is empty,email:is empty,order:invalid
 
     Error400:
       type: object
@@ -5963,7 +5963,7 @@ components:
         message_error:
           type: string
           description: Error message.
-          example: Array\n(\n    [order] => invalid\n)\n
+          example: subject:invalid,amount:is empty,email:is empty,order:invalid
 
     Error400Event:
       type: object
@@ -5979,7 +5979,7 @@ components:
         message_error:
           type: string
           description: Error message.
-          example: "Array\n(\n    [event] => is empty\n)\n"
+          example: subject:invalid,amount:is empty,email:is empty,order:invalid
 
     Error400get:
       type: object
@@ -5995,7 +5995,7 @@ components:
         message_error:
           type: string
           description: Error message.
-          example: Array\n(\n    [id] => is Empty\n)\n
+          example: subject:invalid,amount:is empty,email:is empty,order:invalid
 
     Error401:
       type: object
