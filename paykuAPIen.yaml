@@ -2721,7 +2721,6 @@ paths:
                     - 7 Cleo
                     - 8 Hites
                     - 9 Mach
-                    - 11 Khipu
                     - 12 Chek
                     - 99 All
                   type: integer
@@ -3783,7 +3782,6 @@ paths:
                     - 7 Cleo
                     - 8 Hites
                     - 9 Mach
-                    - 11 Khipu
                     - 12 Chek
                     - 99 All
                   type: integer
