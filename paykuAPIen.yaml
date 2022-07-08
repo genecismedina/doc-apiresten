@@ -398,6 +398,7 @@ paths:
             https://BASE-URL/api/wallet/payout \
             -H 'Accept: application/json, text/plain, */*' \
             -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Sign: SIGN'  \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
@@ -405,7 +406,7 @@ paths:
               "phone": "123456789",
               "subject": "subject",
               "currency": "CLP",
-              "order": 133222,
+              "order": "133222",
               "amount":  1000,
               "accountbank_name": "example name",
               "accountbank_rut": "111111111",
@@ -421,7 +422,7 @@ paths:
                     'email' => 'example@payku.cl',
                     'phone' => '123456789',
                     'subject' => 'subject',
-                    'order' => 133222,
+                    'order' => "133222",
                     'currency' => 'CLP',
                     'amount' =>  1000,
                     'accountbank_name' => 'example name',
@@ -431,7 +432,8 @@ paths:
                     'accountbank_num' => '12312312312'
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -442,6 +444,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
                   'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
                 body: JSON.stringify(data)
@@ -455,7 +458,7 @@ paths:
               "phone": "123456789",
               "subject": "subject",
               "currency": "CLP",
-              "order": 133222,
+              "order": "133222",
               "amount":  1000,
               "accountbank_name": "example name",
               "accountbank_rut": "111111111",
@@ -485,16 +488,16 @@ paths:
                   type: string
                   example: test subject
                 currency:
-                  description: Currency
+                  description: Currency description (ISO format)
                   type: string
                   example: "CLP"
                 order:
                   description: E-commerce order
-                  type: integer
-                  example: 98745
+                  type: string
+                  example: "98745"
                 amount:
                   description: Order amount
-                  type: integer
+                  type: float
                   example: 25000
                 accountbank_name:
                   description: Name of the destination account holder
@@ -506,25 +509,25 @@ paths:
                   example: 111111111
                 accountbank_sbif:
                   description: |
-                                Code of the bank to which the bank account belongs.
-                                  - 0001 Banco de Chile
-                                  - 0009 Banco Internacional
-                                  - 0014 Scotiabank Chile
-                                  - 0016 Banco de crédito e inversiones (BCI)
-                                  - 0027 Banco Corpbanca
-                                  - 0028 Banco Bice
-                                  - 0031 HSBC Bank Chile
-                                  - 0037 Banco Santander Chile
-                                  - 0039 Itaú Corpbanca
-                                  - 0049 Banco Security
-                                  - 0051 Banco Falabella
-                                  - 0053 Banco Ripley
-                                  - 0054 Rabobank Chile
-                                  - 0055 Banco Consorcio
-                                  - 0056 Banco Penta
-                                  - 0057 Banco Paris
-                                  - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
-                                  - 0059 Banco BTG Pactual Chile
+                    Code of the bank to which the bank account belongs.
+                      - 0001 Banco de Chile
+                      - 0009 Banco Internacional
+                      - 0014 Scotiabank Chile
+                      - 0016 Banco de crédito e inversiones (BCI)
+                      - 0027 Banco Corpbanca
+                      - 0028 Banco Bice
+                      - 0031 HSBC Bank Chile
+                      - 0037 Banco Santander Chile
+                      - 0039 Itaú Corpbanca
+                      - 0049 Banco Security
+                      - 0051 Banco Falabella
+                      - 0053 Banco Ripley
+                      - 0054 Rabobank Chile
+                      - 0055 Banco Consorcio
+                      - 0056 Banco Penta
+                      - 0057 Banco Paris
+                      - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
+                      - 0059 Banco BTG Pactual Chile
                   type: string
                   example: "0001"
                 accountbank_type:
@@ -584,12 +587,13 @@ paths:
             https://BASE-URL/api/wallet/withdraw \
             -H 'Accept: application/json, text/plain, */*' \
             -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Sign: SIGN'  \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
               "subject": "subject",
               "currency": "CLP",
-              "order": 133222,
+              "order": "133222",
               "amount":  1000
             }'
         - lang: "PHP"
@@ -598,12 +602,13 @@ paths:
               $body = $client->request('POST', 'https://BASE_URL/api/wallet/withdraw', [
                 'json' => [
                     'subject' => 'subject',
-                    'order' => 133222,
+                    'order' => "133222",
                     'currency' => 'CLP',
                     'amount' =>  1000
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
+                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -614,6 +619,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
                   'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
                 },
                 body: JSON.stringify(data)
@@ -625,7 +631,7 @@ paths:
             let data = {
               "amount":  1000,
               "currency": "CLP",
-              "order": 133222,
+              "order": "133222",
               "subject": "subject"
             };
 
@@ -641,16 +647,16 @@ paths:
                   type: string
                   example: test subject
                 currency:
-                  description: Currency
+                  description: Currency description (ISO format)
                   type: string
                   example: "CLP"
                 order:
                   description: E-commerce order
-                  type: integer
-                  example: 98745
+                  type: string
+                  example: "98745"
                 amount:
                   description: order amount
-                  type: integer
+                  type: float
                   example: 25000
               required:
                 - subject
