@@ -512,6 +512,7 @@ paths:
                     Code of the bank to which the bank account belongs.
                       - 0001 Banco de Chile
                       - 0009 Banco Internacional
+                      - 0012 Banco Estado
                       - 0014 Scotiabank Chile
                       - 0016 Banco de crédito e inversiones (BCI)
                       - 0027 Banco Corpbanca
@@ -526,8 +527,13 @@ paths:
                       - 0055 Banco Consorcio
                       - 0056 Banco Penta
                       - 0057 Banco Paris
-                      - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
                       - 0059 Banco BTG Pactual Chile
+                      - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
+                      - 0672 Coopeuch
+                      - 729  Caja los Andes
+                      - 730  Tenpo
+                      - 732  Los Andes
+                      - 875  Mercado Pago
                   type: string
                   example: "0001"
                 accountbank_type:
@@ -3254,24 +3260,30 @@ paths:
                     sbif:
                       description: |
                         Bank code to which the bank account belongs.
-                        - 0001 Banco de Chile
-                        - 0009 Banco Internacional
-                        - 0014 Scotiabank Chile
-                        - 0016 Banco de crÃ©dito e inversiones (BCI)
-                        - 0027 Banco Corpbanca
-                        - 0028 Banco Bice
-                        - 0031 HSBC Bank Chile
-                        - 0037 Banco Santander Chile
-                        - 0039 ItaÃº Corpbanca
-                        - 0049 Banco Security
-                        - 0051 Banco Falabella
-                        - 0053 Banco Ripley
-                        - 0054 Rabobank Chile
-                        - 0055 Banco Consorcio
-                        - 0056 Banco Penta
-                        - 0057 Banco Paris
-                        - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
-                        - 0059 Banco BTG Pactual Chile
+                          - 0001 Banco de Chile
+                          - 0009 Banco Internacional
+                          - 0012 Banco Estado
+                          - 0014 Scotiabank Chile
+                          - 0016 Banco de crédito e inversiones (BCI)
+                          - 0027 Banco Corpbanca
+                          - 0028 Banco Bice
+                          - 0031 HSBC Bank Chile
+                          - 0037 Banco Santander Chile
+                          - 0039 Itaú Corpbanca
+                          - 0049 Banco Security
+                          - 0051 Banco Falabella
+                          - 0053 Banco Ripley
+                          - 0054 Rabobank Chile
+                          - 0055 Banco Consorcio
+                          - 0056 Banco Penta
+                          - 0057 Banco Paris
+                          - 0059 Banco BTG Pactual Chile
+                          - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
+                          - 0672 Coopeuch
+                          - 729  Caja los Andes
+                          - 730  Tenpo
+                          - 732  Los Andes
+                          - 875  Mercado Pago
                       type: string
                       example: "0001"
                     type:
