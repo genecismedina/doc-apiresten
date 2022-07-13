@@ -322,6 +322,8 @@ tags:
       </div>
   - name: Escrow Transaction
     description: This functionality will allow escrow accounts authorized by Payku to settle transactions.
+  - name: Nullification
+    description: Allows you to request the cancellation of a transaction made through payku.
   - name: Marketplace
     description: |
       It allows the registration of clients, to later carry out the distribution according to the assigned percentage.
@@ -950,6 +952,100 @@ paths:
                   description: Arrangement containing the identifier of each of the transactions to be authorized for settlement.
                   type: array
                   example: ['trx3b4d77b43acd9a720','trx3b4d77b43acd9a385']
+
+  /api/nullification:
+    post:
+      tags:
+      - Nullification
+      summary: Nullable request.
+      description: This method allows you to request the cancellation of a transfer to payku.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/nullificationResponse"
+        "400":
+          description: Error in the request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: Incorrect public token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
+      x-codeSamples:
+        - lang: "cURL"
+          source: |
+            curl -X POST \
+            https://BASE-URL/api/nullification \
+            -H 'Accept: application/json, text/plain, */*' \
+            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE-URL' \
+            -d '{
+              'id': 'trxpr2a45s1dytg1',
+              'amount': 25000,
+              'subject': 'nullable request'
+            }'
+        - lang: "PHP"
+          source: |
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('POST', 'https://BASE_URL/api/nullification', [
+                'json' => [
+                  'id' => 'trxpr2a45s1dytg1',
+                  'amount' => 25000,
+                  'subject' => "transaction annulment"
+                  ],
+                'headers' => [
+                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                ]
+              ])->getBody();
+            $response = json_decode($body);
+        - lang: "JS"
+          source: |
+            const request = async (data) => {
+              const response = await fetch('https://BASE_URL/api/nullification', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                },
+                body: JSON.stringify(data)
+              });
+              const result = await response.json();
+              console.log(result)
+            }
+
+            let data = {
+              'transactions': 'trxpr2a45s1dytg1',
+              'amount': 25000,
+              'subject': 'transaction annulment'
+            };
+
+            request(data);
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  description: Identifier of the transfer of which you want to request cancellation.
+                  type: string
+                  example: "trxpr2a45s1dytg1"
+                amount:
+                  description: Transaction amount.
+                  type: int
+                  example: 25000
+                subject:
+                  description: description of the cancellation request.
+                  type: string
+                  example: "transaction annulment"
+
 
   /api/suclient/:
     post:
@@ -5913,6 +6009,15 @@ components:
           type: string
           description: Account identifier.
           example: "cu245a17e00f7ce3715f5a"
+
+    nullificationResponse:
+      description: "Datos de retorno de la creación de una solicitud de anulación"
+      type: object
+      properties:
+        status:
+          type: string
+          description: "Estado del registro"
+          example: "register"
 
     EscrowResponse:
       description: "Datos de retorno de la creaciÃ³n de una transacciÃ³n"
