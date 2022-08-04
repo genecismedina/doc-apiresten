@@ -6178,7 +6178,7 @@ components:
           example: "Success"
         current_id:
           type: string
-          description: Payku virtual wallet identifier.
+          description: Payku virtual wallet identifier "last movements".
           example: "wa8a6171ab83323c37"
         amount_available:
           type: integer
@@ -6277,7 +6277,7 @@ components:
                   amount:
                     type: string
                     description: Amount to be deposited in the destination account.
-                    example: "1000"
+                    example: "3680"
                   accountbank_rut:
                     type: string
                     description: Rut of the destination account holder.
