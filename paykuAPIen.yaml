@@ -241,8 +241,8 @@ info:
       </table>
     </div>
 
-    -	Production: provides direct access to generate actual transactions.
-    - Sandbox: allows you to test your integration without affecting the actual data.
+    - **Production**: provides direct access to generate actual transactions.
+    - **Sandbox**: allows you to test your integration without affecting the actual data.
 
     # Test Card
 
@@ -6175,7 +6175,7 @@ components:
           description: |
           Status of the load to the wallet. The possible statuses that can be obtained are the following:
             - success
-          example: "Success"
+          example: "success"
         current_id:
           type: string
           description: Payku virtual wallet identifier "last movements".
