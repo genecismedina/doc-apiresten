@@ -380,7 +380,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/WalletResponse"
+                $ref: "#/components/schemas/WalletResponseThird"
         "400":
           description: Request failed.
           content:
@@ -6217,6 +6217,25 @@ components:
           description: Id information
           example: is not valid
 
+    WalletResponseThird:
+      description: "Return data of the load to the wallet"
+      type: object
+      properties:
+        status:
+          type: string
+          description: |
+            Status of the load to the wallet. The possible statuses that can be obtained are the following:
+            - success
+          example: "success"
+        identifier_wallet:
+          type: string
+          description: payku virtual wallet movement identifier.
+          example: "wab5f7232dafff18f9"
+        identifier_payout:
+          type: string
+          description: Third party payment identifier.
+          example: "pab5fssdd2daff58Ud"
+
     WalletResponse:
       description: "Return data of the load to the wallet"
       type: object
@@ -6224,7 +6243,7 @@ components:
         status:
           type: string
           description: |
-          Status of the load to the wallet. The possible statuses that can be obtained are the following:
+            Status of the load to the wallet. The possible statuses that can be obtained are the following:
             - success
           example: "Success"
         identifier_wallet:
