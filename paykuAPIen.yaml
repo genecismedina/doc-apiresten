@@ -365,6 +365,8 @@ tags:
       The main use of these methods is to make one-time charges to a customer for a service or product, such as hiring a delivery service for a product or the purchase of a particular product.
   - name: Wallet
     description: With this Wallet method you can create your wallet in **Payku**.
+  - name: payku.cl
+    description: Login to https://app.payku.cl/.
 
 paths:
 
