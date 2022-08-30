@@ -2789,7 +2789,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TransactionResponse"
+                $ref: "#/components/schemas/TransactionRegisterResponse"
         "400":
           description: Request failed.
           content:
@@ -4977,7 +4977,7 @@ components:
       properties:
         status:
           description: |
-            Transaction status The possible statuses you can get are the following:
+            Transaction status. The possible statuses you can get are the following:
             - pending
             - success
             - rejected
@@ -5327,6 +5327,30 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
+            - pending
+            - success
+            - rejected
+            - refunded partial
+            - refunded
+          example: "pending"
+        id:
+          type: string
+          description: Transaction identifier created by payku.
+          example: "clasd12319715c30002ab3ba4dab"
+        url:
+          type: string
+          description: URL to redirect the user.
+          example: "https://BASE-URL/url_de_pago"
+
+    TransactionRegisterResponse:
+      description: "Return data from the creation of a transaction"
+      type: object
+      properties:
+        status:
+          type: string
+          description: |
+            Transaction status. The possible statuses you can get are the following:
+            - register
             - pending
             - success
             - rejected
