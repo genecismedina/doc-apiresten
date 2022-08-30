@@ -5374,6 +5374,7 @@ components:
           type: string
           description: |
             Transaction status The possible statuses you can get are the following:
+            - register
             - pending
             - success
             - rejected
@@ -5497,6 +5498,7 @@ components:
                 type: string
                 description: |
                   Transaction status The possible statuses you can get are the following:
+                  - register
                   - pending
                   - success
                   - rejected
