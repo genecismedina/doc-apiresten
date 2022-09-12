@@ -2908,7 +2908,17 @@ paths:
                   format: url
                   example: https://youwebsite.com/urlreturn?orderClient=123
                 urlnotify:
-                  description: Callback url of the business where payku will notify the payment.
+                  description: |
+                    Callback url of the business where payku will notify the payment.
+                    - Note: The callback will respond:
+                      - {
+                          - "transaction_id": "9916581765599311",
+                          - "payment_key" : "trx32cbbb9c0a777fc68",
+                          - "transaction_key" : "9916581765599311",
+                          - "verification_key": "8b3e2202fb086a7de93005ae34d5e18c",
+                          - "order": "199",
+                          - "status": "success"
+                      - }
                   type: string
                   format: url
                   example: https://youwebsite.com/urlnotify?orderClient=123
@@ -3053,31 +3063,31 @@ paths:
 
             request();
 
-  /api/verificar      <-DEPRECATED->:
-    post:
-      tags:
-        - Transaction
-      summary: "url Callback Transaction"
-      description: |
-        After the payment has been made by the user, payku will notify the merchant, the result of the operation (status), invoking the urlnotify previously provided in the creation of the payment and in turn will deliver a series of data for internal validations by the application of the trade, such as the order for the transaction to be identified in your system, the transaction_id which corresponds to the unique identifier in payku and a verification_key, which corresponds to a unique validation hash per transaction.
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/NotifyPaymentResponse"
-        "400":
-          description: Request failed.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error400"
-        "401":
-          description: Incorrect public token.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error401"
+  # /api/verificar      <-DEPRECATED->:
+  #   post:
+  #     tags:
+  #       - Transaction
+  #     summary: "url Callback Transaction"
+  #     description: |
+  #       After the payment has been made by the user, payku will notify the merchant, the result of the operation (status), invoking the urlnotify previously provided in the creation of the payment and in turn will deliver a series of data for internal validations by the application of the trade, such as the order for the transaction to be identified in your system, the transaction_id which corresponds to the unique identifier in payku and a verification_key, which corresponds to a unique validation hash per transaction.
+  #     responses:
+  #       "200":
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/NotifyPaymentResponse"
+  #       "400":
+  #         description: Request failed.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error400"
+  #       "401":
+  #         description: Incorrect public token.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error401"
 
   /api/event:
     post:
