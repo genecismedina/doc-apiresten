@@ -2903,21 +2903,31 @@ paths:
                   type: integer
                   example: 1
                 urlreturn:
-                  description: return url of the trade where payku will redirect the payer.
+                  description: return url of the merchant where payku will redirect the payer after 3 seconds of obtaining the result of the transaction.
                   type: string
                   format: url
                   example: https://youwebsite.com/urlreturn?orderClient=123
                 urlnotify:
                   description: |
                     Callback url of the business where payku will notify the payment.
-                    - Note: The callback will respond:
+                    - Note: After the client completes the payment process at their bank, payku will automatically respond to the endpoint entered in urlnotify the result of the banking operation.
+                      - **Approved Example:**
                       - {
-                          - "transaction_id": "9916581765599311",
-                          - "payment_key" : "trx32cbbb9c0a777fc68",
-                          - "transaction_key" : "9916581765599311",
-                          - "verification_key": "8b3e2202fb086a7de93005ae34d5e18c",
+                          - "transaction_id": "9916587765599311",
+                          - "payment_key" : "trx32cb779c0a777fc68",
+                          - "transaction_key" : "9916581777599311",
+                          - "verification_key": "8b3e2202fb086a7de93777ae34d5e18c",
                           - "order": "199",
                           - "status": "success"
+                      - }
+                      - **Rejected Example:**
+                      - {
+                          - "transaction_id": "9916587765599311",
+                          - "payment_key" : "trx32cb779c0a777fc68",
+                          - "transaction_key" : "9916581777599311",
+                          - "verification_key": "8b3e2202fb086a7de93777ae34d5e18c",
+                          - "order": "199",
+                          - "status": "failed"
                       - }
                   type: string
                   format: url
