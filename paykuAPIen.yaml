@@ -5465,9 +5465,25 @@ components:
               description: Card type.
               example: ""
             additional_parameters:
-              type: array
-              description: Additional parameters that Payku can send.
-              example: ""
+              type: object
+              description: |
+                **Example** of additional parameters that Payku can send.
+              properties:
+                identificador:
+                  type: string
+                  description: |
+                    **Example** of transaction identifier:
+                  example: "11.111.111-1"
+                banco:
+                  type: string
+                  description: |
+                    **Example** of bank where the transaction was made:
+                  example: "Banco Estado"
+                numero_cuenta:
+                  type: string
+                  description: |
+                    **Example** of account number in which the transaction was made:
+                  example: "00126544977"
             currency:
               type: string
               description: Currency.
@@ -5585,9 +5601,25 @@ components:
                     description: Card type.
                     example: ""
                   additional_parameters:
-                    type: array
-                    description: Additional parameters that Payku can send.
-                    example: ""
+                    type: object
+                    description: |
+                      **Example** of additional parameters that Payku can send.
+                    properties:
+                      identificador:
+                        type: string
+                        description: |
+                          **Example** of transaction identifier:
+                        example: "11.111.111-1"
+                      banco:
+                        type: string
+                        description: |
+                          **Example** of bank where the transaction was made:
+                        example: "Banco Estado"
+                      numero_cuenta:
+                        type: string
+                        description: |
+                          **Example** of account number in which the transaction was made:
+                        example: "00126544977"
                   currency:
                     type: string
                     description: Currency.
