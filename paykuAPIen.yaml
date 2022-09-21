@@ -1759,12 +1759,12 @@ paths:
                 - name
                 - phone
 
-  /api/suclient/{idClient}:
+  /api/suclient/{idClient} or {emailClient}:
     get:
       tags:
         - Subscription
       summary: Query Client data
-      description: This method allows obtaining the details of a client.
+      description: This method allows obtaining the details of a client or the client's email.
       operationId: getClientById
       parameters:
         - name: id
