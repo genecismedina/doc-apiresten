@@ -18,7 +18,7 @@ info:
     flex-direction: column;
     ">
     <strong style="color: #fff">New: You can do live tests of our test-APIs</strong>
-    <button name="button" style="
+    <a style="
     margin-top:0.7rem;
     background: #fff;
     border: 1px solid rgb(50, 50, 159);
@@ -29,9 +29,15 @@ info:
     padding: 4px 8px;
     display: inline-block;
     text-decoration: none;
-    cursor: pointer;">
-    <a href="https://testing-apirest.payku.cl/">Tests</a>
-    </button>
+    cursor: pointer;
+    text-align: center"
+    href="https://testing-apirest.payku.cl/"
+    target="_blanck" rel=”noopener noreferrer”
+    onMouseOver="this.style.color='#000', this.style.background='#DBDBDB'"
+    onMouseOut="this.style.color='#2F39D1', this.style.background='#fff'"
+     >
+    tests
+      </a>
     </div>
 
     # Introduction
