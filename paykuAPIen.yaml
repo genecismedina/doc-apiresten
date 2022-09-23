@@ -8,6 +8,32 @@ info:
   description: |
     Select the language of the documentation: <a href="https://docs.payku.cl/">ES</a> | EN
 
+    <div style="
+    background: #2F39D1;
+    width:100%;
+    height:6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    ">
+    <strong style="color: #fff">New: You can do live tests of our test-APIs</strong>
+    <button name="button" style="
+    margin-top:0.7rem;
+    background: #fff;
+    border: 1px solid rgb(50, 50, 159);
+    color: rgb(50, 50, 159);
+    font-weight: normal;
+    margin-left: 0.5em;
+    width:20%;
+    padding: 4px 8px;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;">
+    <a href="https://testing-apirest.payku.cl/">Tests</a>
+    </button>
+    </div>
+
     # Introduction
     Welcome to the Payku API. You can use our API to access the different
     Payku endpoints, where you can generate and manage payments through different
@@ -31,7 +57,7 @@ info:
 
     # API Security
     Each request is required to have included in the header:
-      - Authorization: Bearer **TOKEN-PÃšBLICO**
+      - Authorization: Bearer **TOKEN-PÚBLICO**
 
     # Signature
     In the case of the subscription and Mall API, an additional layer of security was added
