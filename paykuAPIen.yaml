@@ -17,7 +17,7 @@ info:
     justify-content: center;
     flex-direction: column;
     ">
-    <strong style="color: #fff">New: You can do live tests of our test-APIs</strong>
+    <strong style="color: #fff">New: You can do live tests of our API</strong>
     <a style="
     margin-top:0.7rem;
     background: #fff;
@@ -36,7 +36,7 @@ info:
     onMouseOver="this.style.color='#000', this.style.background='#DBDBDB'"
     onMouseOut="this.style.color='#2F39D1', this.style.background='#fff'"
      >
-    tests
+    Tests
       </a>
     </div>
 
