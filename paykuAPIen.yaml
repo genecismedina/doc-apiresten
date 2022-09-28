@@ -448,7 +448,8 @@ paths:
               "accountbank_rut": "111111111",
               "accountbank_sbif": "0001",
               "accountbank_type": "1",
-              "accountbank_num": "12312312312"
+              "accountbank_num": "12312312312",
+              "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745"
             }'
         - lang: "PHP"
           source: |
@@ -465,7 +466,8 @@ paths:
                     'accountbank_rut' => '111111111',
                     'accountbank_sbif' => '0001',
                     'accountbank_type' => '1',
-                    'accountbank_num' => '12312312312'
+                    'accountbank_num' => '12312312312',
+                    "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745"
                   ],
                 'headers' => [
                   'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
@@ -500,7 +502,8 @@ paths:
               "accountbank_rut": "111111111",
               "accountbank_sbif": "0001",
               "accountbank_type": "1",
-              "accountbank_num": "12312312312"
+              "accountbank_num": "12312312312",
+              "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745"
             };
 
             request(data);
@@ -584,6 +587,24 @@ paths:
                   description: Customer account number
                   type: string
                   example: "12312312312"
+                url_notify:
+                  description: |
+                    url where the result of the payment will be notified.
+                    - Note: After making the payment to third parties, payku will automatically respond to the endpoint entered in urlnotify the result of the operation.
+                      - **Approved Example:**
+                      - {
+                          - "id": "morexxzxxx",
+                          - "status" : "success",
+                          - "update_at" : "2022-09-27 12:29:35"
+                      - }
+                      - **Rejected Example:**
+                      - {
+                          - "id": "morexzxxxx",
+                          - "status" : "fraud_prevention",
+                          - "update_at" : "2022-09-27 12:29:35"
+                      - }
+                  type: string
+                  example: "https://youwebsite.com/urlnotify?orderClient=98745"
               required:
                 - email
                 - phone
