@@ -600,7 +600,7 @@ paths:
                       - **Rejected Example:**
                       - {
                           - "id": "morexzxxxx",
-                          - "status" : "fraud_prevention",
+                          - "status" : "banking_error",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
                   type: string
@@ -6575,7 +6575,13 @@ components:
               example: "0001"
             status:
               type: string
-              description: Movement status.
+              description: |
+                Movement status.
+                - pending  ("payout registered")
+                - processing  ("payout in payment process")
+                - success  ("payout successfully deposited")
+                - banking_error  ("payout rejected by the bank")
+                - fraud_prevention  ("payout rejected by compliance")
               example: "pending"
             update_at:
               type: string
