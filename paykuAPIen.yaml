@@ -594,12 +594,14 @@ paths:
                       - **Approved Example:**
                       - {
                           - "id": "morexxzxxx",
+                          - "identifier_payout": "morexxzxxx",
                           - "status" : "success",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
                       - **Rejected Example:**
                       - {
                           - "id": "morexzxxxx",
+                          - "identifier_payout": "morexzxxxx",
                           - "status" : "banking_error",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
@@ -6326,19 +6328,19 @@ components:
               example: "2017-05-17T19:12:57.189Z"
         gateway_response:
           type: object
-          description: ""
+          description: "Response to the cancellation request"
           properties:
             status:
               type: string
-              description: "No availability in the wallet"
+              description: "Status of registration of the request for annulment"
               example: "No availability in the wallet"
             message:
               type: string
-              description: "The cancellation will be executed after the amount requested is deducted from your next settlement"
+              description: "Application process message"
               example: "The cancellation will be executed after the amount requested is deducted from your next settlement"
             alert:
               type: string
-              description: "No availability in the wallet"
+              description: "Alert on the status of the cancellation request"
               example: "No availability in the wallet"
 
     nullificationResponseGet:
