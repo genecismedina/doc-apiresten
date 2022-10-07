@@ -594,12 +594,14 @@ paths:
                       - **Approved Example:**
                       - {
                           - "id": "morexxzxxx",
+                          - "identifier_payout": "morexxzxxx",
                           - "status" : "success",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
                       - **Rejected Example:**
                       - {
                           - "id": "morexzxxxx",
+                          - "identifier_payout": "morexzxxxx",
                           - "status" : "banking_error",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
@@ -1181,7 +1183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/nullificationResponse"
+                $ref: "#/components/schemas/nullificationResponseGet"
         "400":
           description: Error in the request.
           content:
@@ -6281,41 +6283,109 @@ components:
       description: "Return data from the creation of a cancellation request"
       type: object
       properties:
-        id:
-          type: string
-          description: "Identifier of the transfer for which cancellation is to be requested."
-          example: "trxpr2a45s1dytg1"
-        amount:
-          type: number
-          description: "Transaction amount"
-          example: 25000
-        currency:
-          type: string
-          description: "Currency"
-          example: "CLP"
         status:
           type: string
           description: "Registration status"
-          example: "register"
-        payment:
+          example: "success"
+        nullify:
           type: object
+          description: ""
           properties:
-            gateway:
+            id:
               type: string
-              description: "Payment method"
-              example: "webpay"
-            payment_type:
+              description: "Identifier of the transfer for which cancellation is to be requested."
+              example: "trxpr2a45s1dytg1"
+            amount:
+              type: number
+              description: "Transaction amount"
+              example: 25000
+            currency:
               type: string
-              description: "Payment type"
-              example: "VC"
-        created_at:
-          type: string
-          description: "Cancellation request creation date"
-          example: "2017-05-17T19:12:57.189Z"
-        updated_at:
-          type: string
-          description: "Cancellation request update date"
-          example: "2017-05-17T19:12:57.189Z"
+              description: "Currency"
+              example: "CLP"
+            status:
+              type: string
+              description: "Registration status"
+              example: "register"
+            payment:
+              type: object
+              properties:
+                gateway:
+                  type: string
+                  description: "Payment method"
+                  example: "webpay"
+                payment_type:
+                  type: string
+                  description: "Payment type"
+                  example: "VC"
+            created_at:
+              type: string
+              description: "Cancellation request creation date"
+              example: "2017-05-17T19:12:57.189Z"
+            updated_at:
+              type: string
+              description: "Cancellation request update date"
+              example: "2017-05-17T19:12:57.189Z"
+        gateway_response:
+          type: object
+          description: "Response to the cancellation request"
+          properties:
+            status:
+              type: string
+              description: "Status of registration of the request for annulment"
+              example: "No availability in the wallet"
+            message:
+              type: string
+              description: "Application process message"
+              example: "The cancellation will be executed after the amount requested is deducted from your next settlement"
+            alert:
+              type: string
+              description: "Alert on the status of the cancellation request"
+              example: "No availability in the wallet"
+
+    nullificationResponseGet:
+      description: "Return data from the creation of a cancellation request"
+      type: object
+      properties:
+        nullify:
+          type: object
+          description: "Return data from the creation of a cancellation request"
+          properties:
+            id:
+              type: string
+              description: "Identifier of the transfer for which cancellation is to be requested."
+              example: "trxpr2a45s1dytg1"
+            amount:
+              type: number
+              description: "Transaction amount"
+              example: 25000
+            currency:
+              type: string
+              description: "Currency"
+              example: "CLP"
+            status:
+              type: string
+              description: "Registration status"
+              example: "register"
+            payment:
+              type: object
+              properties:
+                gateway:
+                  type: string
+                  description: "Payment method"
+                  example: "webpay"
+                payment_type:
+                  type: string
+                  description: "Payment type"
+                  example: "VC"
+            created_at:
+              type: string
+              description: "Cancellation request creation date"
+              example: "2017-05-17T19:12:57.189Z"
+            updated_at:
+              type: string
+              description: "Cancellation request update date"
+              example: "2017-05-17T19:12:57.189Z"
 
     EscrowResponse:
       description: "Return data from the creation of a cancellation request"
