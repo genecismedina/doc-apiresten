@@ -5503,7 +5503,7 @@ components:
               example: null
             deposit_date:
               type: string
-              description: Date on which the deposit was made.
+              description: Date on which the deposit will be made to the client.
               example: "2022-10-05"
             verification_key:
               type: string
@@ -5647,7 +5647,7 @@ components:
                     example: null
                   deposit_date:
                     type: string
-                    description: Date on which the deposit was made.
+                    description: Date on which the deposit will be made to the client.
                     example: "2022-10-05"
                   verification_key:
                     type: string
