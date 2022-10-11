@@ -5497,6 +5497,14 @@ components:
               type: string
               description: Identifier of the transaction created by payku.
               example: "107999"
+            transaction_key:
+              type: string
+              description: Transaction identifier created by Payku.
+              example: null
+            deposit_date:
+              type: string
+              description: Date on which the deposit was made.
+              example: "2022-10-05"
             verification_key:
               type: string
               description: Verification code created by Payku.
@@ -5633,6 +5641,14 @@ components:
                     type: string
                     description: Identifier of the transaction created by payku.
                     example: "107999"
+                  transaction_key:
+                    type: string
+                    description: Transaction identifier created by Payku.
+                    example: null
+                  deposit_date:
+                    type: string
+                    description: Date on which the deposit was made.
+                    example: "2022-10-05"
                   verification_key:
                     type: string
                     description: Verification code created by Payku.
