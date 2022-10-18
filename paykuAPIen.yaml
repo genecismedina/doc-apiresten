@@ -2870,6 +2870,7 @@ paths:
               "subject": "Cliente Test",
               "amount": 25000,
               "payment": 1,
+              "expired": "2022-10-19 13:05:10",
               "urlreturn": "https://youwebsite.com/urlreturn?orderClient=123",
               "urlnotify": "https://youwebsite.com/urlnotify?orderClient=123"
             }'
@@ -2883,6 +2884,7 @@ paths:
                   'subject' => 'Client Test',
                   'amount' => 25000,
                   'payment' => 1,
+                  'expired': '2022-10-19 13:05:10',
                   'urlreturn' => 'https://youwebsite.com/urlreturn?orderClient=123',
                   'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123'
                   ],
@@ -2912,6 +2914,7 @@ paths:
               subject: "test subject",
               amount: 25000,
               payment: 1,
+              expired: "2022-10-19 13:05:10",
               urlreturn: "https://youwebsite.com/urlreturn?orderClient=123",
               urlnotify: "https://youwebsite.com/urlnotify?orderClient=123"
             };
@@ -2957,12 +2960,22 @@ paths:
                   example: 1
                 expired:
                   description: |
-                    You can indicate the expiration date of the transaction, indicated as follows:
-                    - Year-Month-Day Hours:Minute:Second.
-                    - It cannot expire before 5 minutes or after one day (Santiago time).
-                    - This field is not required.
-                    - If the expiration field is sent, it is necessary to send the urlreturn field, otherwise it will give an error when redirecting the page.
-                    - The urlreturn will automatically have the following parameters message_error and id. Example: https://www.google.com/?message_error=expired&id=trx60dc327d9e4c094.
+                    Date on which the transaction expires
+
+                    **This field is not required.**
+
+                    Allowed format (year-month-day hour:minute:second) Example: 2022-10-18 23:59:59
+
+                    In case of being sent, it must comply with the following rules:
+                      <ul>
+                        <li>
+                          - It must be greater than 5 minutes from the current date (Santiago time).
+                        </li>
+                        <li>
+                          - urlreturn is required, it will be attached as parameters GET /?message_error=expired&id=trx60dc327d9e4c094
+                        </li>
+                      </ul>
+
                   type: string
                   example: "2022-10-19 13:05:10"
                 urlreturn:
