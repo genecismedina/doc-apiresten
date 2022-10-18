@@ -6348,10 +6348,14 @@ components:
               type: string
               description: "Currency"
               example: "CLP"
-            status:
+            type:
               type: string
-              description: "Registration status"
-              example: "register"
+              description: |
+                NotificationTypes of registration:
+                  - pending
+                  - complete
+                  - partial
+              example: "pending"
             payment:
               type: object
               properties:
@@ -6383,9 +6387,9 @@ components:
               type: string
               description: "Application process message"
               example: "The cancellation will be executed after the amount requested is deducted from your next settlement"
-            alert:
+            nptify:
               type: string
-              description: "Alert on the status of the cancellation request"
+              description: "Notification on the status of the cancellation request"
               example: "No availability in the wallet"
 
     nullificationResponseGet:
@@ -6408,10 +6412,14 @@ components:
               type: string
               description: "Currency"
               example: "CLP"
-            status:
+            type:
               type: string
-              description: "Registration status"
-              example: "register"
+              description: |
+                NotificationTypes of registration:
+                  - pending
+                  - complete
+                  - partial
+              example: "pending"
             payment:
               type: object
               properties:
