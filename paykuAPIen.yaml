@@ -2955,6 +2955,16 @@ paths:
                     - 99 All
                   type: integer
                   example: 1
+                expired:
+                  description: |
+                    You can indicate the expiration date of the transaction, indicated as follows:
+                    - Year-Month-Day Hours:Minute:Second.
+                    - It cannot expire before 5 minutes or after one day (Santiago time).
+                    - This field is not required.
+                    - If the expiration field is sent, it is necessary to send the urlreturn field, otherwise it will give an error when redirecting the page.
+                    - The urlreturn will automatically have the following parameters message_error and id. Example: https://www.google.com/?message_error=expired&id=trx60dc327d9e4c094.
+                  type: string
+                  example: "2022-10-19 13:05:10"
                 urlreturn:
                   description: return url of the merchant where payku will redirect the payer after 3 seconds of obtaining the result of the transaction.
                   type: string
