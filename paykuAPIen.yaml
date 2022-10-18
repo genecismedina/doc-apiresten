@@ -2938,6 +2938,7 @@ paths:
               "subject": "Cliente Test",
               "amount": 25000,
               "payment": 1,
+              "expired": "2022-10-19 13:05:10",
               "urlreturn": "https://youwebsite.com/urlreturn?orderClient=123",
               "urlnotify": "https://youwebsite.com/urlnotify?orderClient=123"
             }'
@@ -2951,6 +2952,7 @@ paths:
                   'subject' => 'Client Test',
                   'amount' => 25000,
                   'payment' => 1,
+                  'expired': '2022-10-19 13:05:10',
                   'urlreturn' => 'https://youwebsite.com/urlreturn?orderClient=123',
                   'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123'
                   ],
@@ -2980,6 +2982,7 @@ paths:
               subject: "test subject",
               amount: 25000,
               payment: 1,
+              expired: "2022-10-19 13:05:10",
               urlreturn: "https://youwebsite.com/urlreturn?orderClient=123",
               urlnotify: "https://youwebsite.com/urlnotify?orderClient=123"
             };
@@ -3023,6 +3026,26 @@ paths:
                     - 99 All
                   type: integer
                   example: 1
+                expired:
+                  description: |
+                    Date on which the transaction expires
+
+                    **This field is not required.**
+
+                    Allowed format (year-month-day hour:minute:second) Example: 2022-10-18 23:59:59
+
+                    In case of being sent, it must comply with the following rules:
+                      <ul>
+                        <li>
+                          - It must be greater than 5 minutes from the current date (Santiago time).
+                        </li>
+                        <li>
+                          - urlreturn is required, it will be attached as parameters GET /?message_error=expired&id=trx60dc327d9e4c094
+                        </li>
+                      </ul>
+
+                  type: string
+                  example: "2022-10-19 13:05:10"
                 urlreturn:
                   description: return url of the merchant where payku will redirect the payer after 3 seconds of obtaining the result of the transaction.
                   type: string
@@ -3063,7 +3086,13 @@ paths:
       tags:
         - Transaction
       summary: "Get the status of multiple payments"
-      description: "This method allows obtaining the information of the payments made in Payku, this method allows a pagination with a maximum of 100 records per page, in addition, it has a date filter, if this parameter is not entered, the current date will be taken, for the pagination It is necessary to add the following at the end of the endpoint? page = 1 & per_page = 100 being the first parameter the page number and the second the number of records per page and for the date filter you must add & date = 2020-10-20 this It will be the date from where the search for transactions will start."
+      description: |
+        you can filter the search for transactions depending on their status. for example. /api/transaction/{identifier}?success=true or to fetch multiple status /api/transaction/{identifier}?pending=true&rejected=true.
+          - date_init: indicates the date from which you want to start the transaction search, if this parameter is not sent the search will start with the current date.
+          - date_end: indicates the date where you want the transaction search to end, if this parameter is not sent, the search will have the current date as the end date.
+          - estatus: you can filter the search for transactions depending on their status. for example: /api/transaction/{identificador}?success=true or to bring multiple statuses /api/transaction/{identificador}?pending=true&rejected=true.
+
+        For pagination it is necessary to add the following at the end of the endpoint ?page=1&per_page=100 the first parameter being the page number and the second the number of records per page. In case you want to search for the transactions between the dates 01-07-2021 y 15-07-2021, also that they are only success status transactions, the url to use would be the following:  https://[URL_BASE]/api/transaction?date_init=2021-09-01&date_end=2021-09-15&success=true.
       responses:
         "200":
           content:
@@ -5477,11 +5506,11 @@ components:
         id:
           type: string
           description: Transaction identifier created by payku.
-          example: "clasd12319715c30002ab3ba4dab"
+          example: "ma32cb779c0a777fc68"
         url:
           type: string
           description: URL to redirect the user.
-          example: "https://BASE-URL/url_de_pago"
+          example: "https://BASE-URL/payment_url"
 
     TransactionRegisterResponse:
       description: "Return data from the creation of a transaction"
@@ -5501,11 +5530,11 @@ components:
         id:
           type: string
           description: Transaction identifier created by payku.
-          example: "clasd12319715c30002ab3ba4dab"
+          example: "trx32cb779c0a777fc68"
         url:
           type: string
           description: URL to redirect the user.
-          example: "https://BASE-URL/url_de_pago"
+          example: "https://BASE-URL/payment_url"
 
     IdentifierResponse:
       description: "Status return data of a transaction"
@@ -5565,6 +5594,14 @@ components:
               type: string
               description: Identifier of the transaction created by payku.
               example: "107999"
+            transaction_key:
+              type: string
+              description: Transaction identifier created by Payku.
+              example: null
+            deposit_date:
+              type: string
+              description: Date on which the deposit will be made to the client.
+              example: "2022-10-05"
             verification_key:
               type: string
               description: Verification code created by Payku.
@@ -5701,6 +5738,14 @@ components:
                     type: string
                     description: Identifier of the transaction created by payku.
                     example: "107999"
+                  transaction_key:
+                    type: string
+                    description: Transaction identifier created by Payku.
+                    example: null
+                  deposit_date:
+                    type: string
+                    description: Date on which the deposit will be made to the client.
+                    example: "2022-10-05"
                   verification_key:
                     type: string
                     description: Verification code created by Payku.
