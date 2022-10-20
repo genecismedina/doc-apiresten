@@ -3713,6 +3713,166 @@ paths:
             }
 
             request();
+
+    put:
+      tags:
+        - Marketplace
+      summary: update client
+      description: This method allows updating the data of a client.
+      # operationId: putSuscriptionById
+      parameters:
+        - name: id
+          in: path
+          description: Unique marketplace identifier.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateClientResponse"
+        "400":
+          description: Request failed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: Incorrect public token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error401"
+      x-codeSamples:
+        - lang: "CURL"
+          source: |
+            curl -X PUT \
+            https://BASE_URL/api/maclient/id \
+            -H 'Accept: application/json, text/plain, */*' \
+            -H 'Sign: SIGN'  \
+            -H 'Authorization: Bearer TOKEN_PUBLICO'  \
+            -H 'Content-Type: application/json,application/json' \
+            -H 'Host: BASE_URL' \
+            -d {
+                "name":"Joe Doe",
+                "phone":"923122312",
+                "bank": {
+                  "sbif": "0001",
+                  "type": "3",
+                  "num": "9999999",
+                  "rut": "261009617"
+                  }
+                }'
+        - lang: "PHP"
+          source: |
+            $client = new \GuzzleHttp\Client();
+              $body = $client->request('PUT', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [
+                'json' => [
+                  'name' => 'Joe Doe',
+                  'phone' => '923122312',
+                  'bank' => [
+                      'num' => '9999999',
+                      'rut' => '261009617'
+                    ]
+                  ],
+                ],
+              ],
+              'headers' => [
+                'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+              ]
+            ])->getBody();
+            $response = json_decode($body);
+        - lang: "JS"
+          source: |
+            const request = async (data) => {
+              const response = await fetch('https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
+                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                },
+                body: JSON.stringify(data)
+              });
+              const result = await response.json();
+              console.log(result)
+            }
+
+            let data = {
+            name:"Joe Doe",
+            phone:"923122312",
+            bank: {
+              sbif: "0001",
+              type: "3",
+              num: "9999999",
+              rut: "261009617"
+              }
+            };
+
+            request(data);
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Client name
+                  type: string
+                  example: "Joe Doe Doe"
+                phone:
+                  description: Client phone
+                  type: string
+                  example: "923122312"
+                bank:
+                  description: Client bank details
+                  type: object
+                  properties:
+                    sbif:
+                      description: |
+                          Code of the bank to which the bank account belongs.
+                            - 0001 Banco de Chile
+                            - 0009 Banco Internacional
+                            - 0012 Banco Estado
+                            - 0014 Scotiabank Chile
+                            - 0016 Banco de crédito e inversiones (BCI)
+                            - 0027 Banco Corpbanca
+                            - 0028 Banco Bice
+                            - 0031 HSBC Bank Chile
+                            - 0037 Banco Santander Chile
+                            - 0039 Itaú Corpbanca
+                            - 0049 Banco Security
+                            - 0051 Banco Falabella
+                            - 0053 Banco Ripley
+                            - 0054 Rabobank Chile
+                            - 0055 Banco Consorcio
+                            - 0056 Banco Penta
+                            - 0057 Banco Paris
+                            - 0059 Banco BTG Pactual Chile
+                            - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
+                            - 0672 Coopeuch
+                            - 729  Caja los Andes
+                            - 730  Tenpo
+                            - 732  Los Andes
+                            - 875  Mercado Pago
+                      type: string
+                      example: "0001"
+                    type:
+                      description: Client account type
+                      type: string
+                      example: "3"
+                    num:
+                      description: Client bank account
+                      type: string
+                      example: "9999999"
+                    rut:
+                      description: Client rut
+                      type: string
+                      example: "261009617"
+
     delete:
       tags:
         - Marketplace
@@ -6241,6 +6401,127 @@ components:
           type: string
           example: "null"
           format: datetime
+
+    UpdateClientResponse:
+      description: "Return data from a client update"
+      type: object
+      properties:
+        id:
+          type: string
+          description: Marketplace identifier.
+          example: "cl0be4c8e623c167bc8b777"
+        status:
+          description: Client status.
+          type: string
+          example: "register"
+        name:
+          type: string
+          description: Client name.
+          example: "Joe Doe"
+        phone:
+          type: string
+          description: Client phone.
+          example: "923122312"
+        email:
+          type: string
+          description: Client email.
+          example: "923122312"
+        bank:
+          description: Client bank details.
+          type: object
+          properties:
+            sbif:
+              description: |
+                  Code of the bank to which the bank account belongs.
+                    - 0001 Banco de Chile
+                    - 0009 Banco Internacional
+                    - 0012 Banco Estado
+                    - 0014 Scotiabank Chile
+                    - 0016 Banco de crédito e inversiones (BCI)
+                    - 0027 Banco Corpbanca
+                    - 0028 Banco Bice
+                    - 0031 HSBC Bank Chile
+                    - 0037 Banco Santander Chile
+                    - 0039 Itaú Corpbanca
+                    - 0049 Banco Security
+                    - 0051 Banco Falabella
+                    - 0053 Banco Ripley
+                    - 0054 Rabobank Chile
+                    - 0055 Banco Consorcio
+                    - 0056 Banco Penta
+                    - 0057 Banco Paris
+                    - 0059 Banco BTG Pactual Chile
+                    - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
+                    - 0672 Coopeuch
+                    - 729  Caja los Andes
+                    - 730  Tenpo
+                    - 732  Los Andes
+                    - 875  Mercado Pago
+              type: string
+              example: "0001"
+            type:
+              description: Client account type.
+              type: string
+              example: "3"
+            num:
+              description: Client bank account.
+              type: string
+              example: "9999999"
+            rut:
+              description: Client rut
+              type: string
+              example: "261009617"
+        affiliations:
+          type: number
+          description: Number of affiliations.
+          example: 2
+        affiliations_details:
+          type: array
+          items:
+            description: Details of affiliations.
+            type: object
+            properties:
+              id:
+                type: string
+                description: Afiliation identifier.
+              status:
+                type: string
+                description: |
+                    Afiliation status:
+                      - not found
+                      - pending
+                      - liquidate
+                      - pending for deposit
+                      - paid
+              token:
+                type: string
+                description: Afiliation Token.
+              name:
+                type: string
+                description: Afiliation name.
+              percentage_affiliation:
+                type: string
+                description: Afiliation porcentage.
+              percentage_client:
+                type: string
+                description: Cliente porcentage.
+            example:
+            - {
+                id: "s6df85b41df65b21se685",
+                status: "register",
+                token: "sgh65g1ns6fg5n1sfg2sr6j5nfg65shr6gh5s4r6h5fg6",
+                name: "market1",
+                percentage_affiliation: 1,
+                percentage_client: 99
+              }
+            - {
+                id: "s6df85b41df65b21se685",
+                status: "register",
+                token: "sgh65g1ns6fg5n1sfg2sr6j5nfg65shr6gh5s4r6h5fg6",
+                name: "market2",
+                percentage_affiliation: 1,
+                percentage_client: 99
+              }
 
     AdminAffiliationResponse:
       description: "Return data from the insertion of an affiliate"
