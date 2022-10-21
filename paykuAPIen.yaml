@@ -1080,8 +1080,8 @@ paths:
     post:
       tags:
       - Nullification
-      summary: Nullable request
-      description: This method allows you to request the cancellation of a transfer to payku.
+      summary: Create nullification
+      description: This method allows you to create a reversal of a transaction.
       responses:
         "200":
           content:
@@ -1157,7 +1157,7 @@ paths:
               type: object
               properties:
                 id:
-                  description: Identifier of the transfer of which you want to request cancellation.
+                  description: Identifier of the transaction which you want to cancel.
                   type: string
                   example: "trxpr2a45s1dytg1"
                 amount:
@@ -3861,17 +3861,21 @@ paths:
                       type: string
                       example: "0001"
                     type:
-                      description: Client account type
-                      type: string
-                      example: "3"
+                      description:  |
+                          Account type.
+                          - 1 Checking account
+                          - 2 Vista/Cuenta RUT
+                          - 3 Saving account
+                      type: int
+                      example: 3
                     num:
-                      description: Client bank account
+                      description: Client's account number.
                       type: string
                       example: "9999999"
                     rut:
-                      description: Client rut
+                      description: Single Tax Registry.
                       type: string
-                      example: "261009617"
+                      example: "111111111"
 
     delete:
       tags:
@@ -6619,7 +6623,7 @@ components:
           properties:
             id:
               type: string
-              description: "Identifier of the transfer for which cancellation is to be requested."
+              description: "Identifier of the transaction which you want to cancel."
               example: "trxpr2a45s1dytg1"
             amount:
               type: number
@@ -6633,9 +6637,9 @@ components:
               type: string
               description: |
                 NotificationTypes of registration:
-                  - pending
-                  - complete
-                  - partial
+                  - **pending** ( It is waiting to raise funds )
+                  - **complete** ( Money available, annulment was executed successfully )
+                  - **partial** ( The total of the funds is not available, it is pending )
               example: "pending"
             payment:
               type: object
