@@ -3038,7 +3038,11 @@ paths:
               "payment": 1,
               "expired": "2022-10-19 13:05:10",
               "urlreturn": "https://youwebsite.com/urlreturn?orderClient=123",
-              "urlnotify": "https://youwebsite.com/urlnotify?orderClient=123"
+              "urlnotify": "https://youwebsite.com/urlnotify?orderClient=123",
+              "additional_parameters": {
+                "parameters1":"keyValue",
+                "parameters2":"keyValue2"
+              }
             }'
         - lang: "PHP"
           source: |
@@ -3052,7 +3056,11 @@ paths:
                   'payment' => 1,
                   'expired': '2022-10-19 13:05:10',
                   'urlreturn' => 'https://youwebsite.com/urlreturn?orderClient=123',
-                  'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123'
+                  'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123',
+                    'additional_parameters': {
+                      'parameters1':'keyValue',
+                      'parameters2':'keyValue2'
+                    }
                   ],
                 'headers' => [
                   'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
@@ -3082,7 +3090,11 @@ paths:
               payment: 1,
               expired: "2022-10-19 13:05:10",
               urlreturn: "https://youwebsite.com/urlreturn?orderClient=123",
-              urlnotify: "https://youwebsite.com/urlnotify?orderClient=123"
+              urlnotify: "https://youwebsite.com/urlnotify?orderClient=123",
+              additional_parameters: {
+                parameters1:"keyValue",
+                parameters2:"keyValue2"
+              }
             };
 
             request(data);
@@ -3174,6 +3186,18 @@ paths:
                   type: string
                   format: url
                   example: https://youwebsite.com/urlnotify?orderClient=123
+                additional_parameters:
+                  description: Additional client parameters (Optional).
+                  type: object
+                  properties:
+                    parameters1:
+                      description: Name of the parameter given by the user payku
+                      type: string
+                      example: "keyValue"
+                    parameters2:
+                      description: Name of the parameter given by the user payku
+                      type: string
+                      example: "keyValue2"
               required:
                 - email
                 - order
