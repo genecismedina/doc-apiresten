@@ -3000,9 +3000,11 @@ paths:
       tags:
         - Transaction
       summary: Generate a transaction
-      description:
+      description: |
         This method allows to create a payment order to **Payku** and receives as a response the **URL** to redirect the payer's browser and the **token** that identifies the transaction.
         Once the payer makes the successful payment, **Payku** will notify the result to the page of the business that was sent in the **urlnotify** parameter.
+
+        **additional_parameters** = allows sending additional information to be registered in payku associated with the transaction **order_ext** within additional_parameters, it is a reserved word, and it is useful to associate the transaction to a unique merchant identifier
       responses:
         "200":
           content:
@@ -3041,7 +3043,8 @@ paths:
               "urlnotify": "https://youwebsite.com/urlnotify?orderClient=123",
               "additional_parameters": {
                 "parameters1":"keyValue",
-                "parameters2":"keyValue2"
+                "parameters2":"keyValue2",
+                "order_ext":"fff-777"
               }
             }'
         - lang: "PHP"
@@ -3059,7 +3062,8 @@ paths:
                   'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123',
                     'additional_parameters': {
                       'parameters1':'keyValue',
-                      'parameters2':'keyValue2'
+                      'parameters2':'keyValue2',
+                      'order_ext':'fff-777'
                     }
                   ],
                 'headers' => [
@@ -3093,7 +3097,8 @@ paths:
               urlnotify: "https://youwebsite.com/urlnotify?orderClient=123",
               additional_parameters: {
                 parameters1:"keyValue",
-                parameters2:"keyValue2"
+                parameters2:"keyValue2",
+                order_ext:"fff-777"
               }
             };
 
@@ -3198,6 +3203,10 @@ paths:
                       description: Name of the parameter given by the user payku
                       type: string
                       example: "keyValue2"
+                    order_ext:
+                      description: Unique identifier provided by the merchant, which allows the transaction to be associated with an external identifier
+                      type: string
+                      example: "fff-777"
               required:
                 - email
                 - order
