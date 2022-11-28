@@ -6995,6 +6995,7 @@ components:
           description: |
             Status of the load to the wallet. The possible statuses that can be obtained are the following:
             - success
+            - failed
           example: "success"
         identifier_wallet:
           type: string
