@@ -3138,6 +3138,8 @@ paths:
                     - 9 Mach
                     - 11 Khipu
                     - 12 Chek
+                    - 15 ServiFacil
+                    - 16 Falabella Fpay
                     - 99 All
                   type: integer
                   example: 1
@@ -4432,6 +4434,8 @@ paths:
                     - 9 Mach
                     - 11 Khipu
                     - 12 Chek
+                    - 15 ServiFacil
+                    - 16 Falabella Fpay
                     - 99 All
                   type: integer
                   example: 1
