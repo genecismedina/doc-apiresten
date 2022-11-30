@@ -1275,7 +1275,7 @@ paths:
       description: |
             This method allows you to obtain nullification requests made to payku by means of an identifier:
 
-            To perform the query it is necessary to add the following at the end of the endpoint /{identifier} for example: **api/payout/trxpr2a45s1dytg1**.
+            To perform the query it is necessary to add the following at the end of the endpoint /{identifier} for example: **api/nullification/trxpr2a45s1dytg1**.
       responses:
         "200":
           content:
