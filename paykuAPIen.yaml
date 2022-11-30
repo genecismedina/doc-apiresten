@@ -6772,10 +6772,22 @@ components:
               type: string
               description: |
                 NotificationTypes of registration:
-                  - **pending** ( It is waiting to raise funds )
-                  - **complete** ( Money available, annulment was executed successfully )
+                  - **total** ( Money available, annulment was executed successfully )
                   - **partial** ( The total of the funds is not available, it is pending )
-              example: "pending"
+              example: "total"
+            status_nullify:
+              type: string
+              description: |
+                Annulement status:
+                  - **pending** ( Registered pending old--> (register) )
+                  - **awaiting_funds** ( In process (Missing of funds) (partial) )
+                  - **waiting_bank_details** ( Approved (Waiting for customer bank details) Only Debit and other means of payment (waiting_bank_details) )
+                  - **complete** ( Approved (Bank details entered) Only Debit and other means of payment (complete) )
+                  - **complete** ( (Money collected) (complete) )
+                  - **reverse_deleted** ( Request deleted by system (request_deleted) )
+                  - **reverse_completed** ( Annulment made (request_made) )
+                  - **reverse_deleted** ( Disabled (request_deleted) )
+              example: "complete"
             payment:
               type: object
               properties:
@@ -6836,10 +6848,22 @@ components:
               type: string
               description: |
                 NotificationTypes of registration:
-                  - pending
-                  - complete
+                  - total
                   - partial
-              example: "pending"
+              example: "total"
+            status_nullify:
+              type: string
+              description: |
+                Annulement status:
+                  - pending **( Registered pending old--> (register) )**
+                  - awaiting_funds **( In process (Missing of funds) (partial) )**
+                  - waiting_bank_details **( Approved (Waiting for customer bank details) Only Debit and other means of payment (waiting_bank_details) )**
+                  - complete **( Approved (Bank details entered) Only Debit and other means of payment (complete) )**
+                  - complete **( (Money collected) (complete) )**
+                  - reverse_deleted **( Request deleted by system (request_deleted) )**
+                  - reverse_completed **( Annulment made (request_made) )**
+                  - reverse_deleted **( Disabled (request_deleted) )**
+              example: "complete"
             payment:
               type: object
               properties:
