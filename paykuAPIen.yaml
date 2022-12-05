@@ -5847,8 +5847,6 @@ components:
             - pending
             - success
             - rejected
-            - refunded partial
-            - refunded
           example: "success"
         id:
           type: string
@@ -5945,6 +5943,21 @@ components:
               type: string
               description: Currency.
               example: "CLP"
+        nullify:
+          description: "Objeto que contiene información de la respuesta de la anulación"
+          type: object
+          properties:
+            status:
+              type: string
+              description: |
+                Estatus de anulación. Los posibles estados que puede obtener son los siguientes:
+                - pending
+                - awaiting_funds
+                - waiting_bank_details
+                - complete
+                - reverse_deleted
+                - reverse_completed
+              example: "complete"
         gateway_response:
           description: "Object containing transaction response information"
           type: object
@@ -5964,14 +5977,13 @@ components:
               description: |
                 Message describing the status.
                   - successful transaction
-                  - Rechazo de transacciÃ³n.
-                  - TransacciÃ³n debe reintentarse.
-                  - Error en transacciÃ³n.
-                  - Rechazo de transacciÃ³n.
-                  - Rechazo por error de tasa.
-                  - Excede cupo mÃ¡ximo mensual.
-                  - Excede lÃ­mite diario por transacciÃ³n.
-                  - Rubro no autorizado.
+                  - Transaction rejected.
+                  - Transaction must be retried.
+                  - Error transaction.
+                  - Rate Error Rejection.
+                  - Exceeds maximum monthly quota.
+                  - Exceeds daily limit per transaction.
+                  - unauthorized item.
               example: "successful transaction"
 
     IdentifierAllResponse:
@@ -5995,8 +6007,6 @@ components:
                   - pending
                   - success
                   - rejected
-                  - refunded partial
-                  - refunded
                 example: "success"
               created_at:
                 type: string
@@ -6023,11 +6033,11 @@ components:
                 properties:
                   start:
                     type: string
-                    description: Inicio de la transacciÃ³n.
+                    description: Start transaction.
                     example: "2020-12-16 15:10:33"
                   end:
                     type: string
-                    description: Fin de la transacciÃ³n.
+                    description: End transaction.
                     example: "2020-12-16 15:10:36"
                   media:
                     type: string
@@ -6089,6 +6099,22 @@ components:
                     type: string
                     description: Currency.
                     example: "CLP"
+              nullify:
+                description: "Object containing abort response information"
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: |
+                      Cancellation status. The possible statuses you can get are as follows:
+                      - pending
+                      - awaiting_funds
+                      - waiting_bank_details
+                      - complete
+                      - reverse_deleted
+                      - reverse_completed
+                      - reverse_deleted
+                    example: "complete"
               gateway_response:
                 description: "Object containing transaction response information"
                 type: object
@@ -6108,14 +6134,13 @@ components:
                     description: |
                       Message describing the status.
                         - successful transaction
-                        - Rechazo de transacciÃ³n.
-                        - TransacciÃ³n debe reintentarse.
-                        - Error en transacciÃ³n.
-                        - Rechazo de transacciÃ³n.
-                        - Rechazo por error de tasa.
-                        - Excede cupo mÃ¡ximo mensual.
-                        - Excede lÃ­mite diario por transacciÃ³n.
-                        - Rubro no autorizado.
+                        - Transaction rejected.
+                        - Transaction must be retried.
+                        - Error transaction.
+                        - Rate Error Rejection.
+                        - Exceeds maximum monthly quota.
+                        - Exceeds daily limit per transaction.
+                        - unauthorized item.
                     example: "successful transaction"
 
     IdentifierMallResponse:
