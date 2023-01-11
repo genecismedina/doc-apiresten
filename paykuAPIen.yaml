@@ -547,7 +547,13 @@ paths:
               "accountbank_sbif": "0001",
               "accountbank_type": "1",
               "accountbank_num": "12312312312",
-              "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745"
+              "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745",
+              "additional_parameters":
+                {
+                "parameters1": "keyValue",
+                "parameters2": "keyValue2",
+                "order_ext": "fff-777"
+                }
             }'
         - lang: "PHP"
           source: |
@@ -565,7 +571,13 @@ paths:
                     'accountbank_sbif' => '0001',
                     'accountbank_type' => '1',
                     'accountbank_num' => '12312312312',
-                    "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745"
+                    'url_notify': 'https://youwebsite.com/urlnotify?orderClient=98745',
+                    'additional_parameters':
+                    {
+                    'parameters1' => 'keyValue',
+                    'parameters2' => 'keyValue2',
+                    'order_ext' => 'fff-777'
+                    }
                   ],
                 'headers' => [
                   'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
@@ -601,7 +613,13 @@ paths:
               "accountbank_sbif": "0001",
               "accountbank_type": "1",
               "accountbank_num": "12312312312",
-              "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745"
+              "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745",
+              "additional_parameters":
+                {
+                "parameters1": "keyValue",
+                "parameters2": "keyValue2",
+                "order_ext": "fff-777"
+                }
             };
 
             request(data);
@@ -705,6 +723,22 @@ paths:
                       - }
                   type: string
                   example: "https://youwebsite.com/urlnotify?orderClient=98745"
+                additional_parameters:
+                  description: Client additional parameters
+                  type: object
+                  properties:
+                    parameter_1:
+                      description: Parameter name given by user payku
+                      type: string
+                      example: "keyValue"
+                    parameter_2:
+                      description: Parameter name given by user payku
+                      type: string
+                      example: "keyValue2"
+                    order_ext:
+                      description: Name of the external order given by the user payku (Optional)
+                      type: string
+                      example: "fff-777"
               required:
                 - email
                 - phone
