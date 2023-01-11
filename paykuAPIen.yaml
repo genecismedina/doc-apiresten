@@ -741,7 +741,6 @@ paths:
                       example: "fff-777"
               required:
                 - email
-                - phone
                 - subject
                 - currency
                 - order
