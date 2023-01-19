@@ -571,13 +571,13 @@ paths:
                     'accountbank_sbif' => '0001',
                     'accountbank_type' => '1',
                     'accountbank_num' => '12312312312',
-                    'url_notify': 'https://youwebsite.com/urlnotify?orderClient=98745',
-                    'additional_parameters':
-                    {
+                    'url_notify' => 'https://youwebsite.com/urlnotify?orderClient=98745',
+                    'additional_parameters' =>
+                    [
                     'parameters1' => 'keyValue',
                     'parameters2' => 'keyValue2',
                     'order_ext' => 'fff-777'
-                    }
+                    ]
                   ],
                 'headers' => [
                   'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
