@@ -110,7 +110,7 @@ info:
 
         if (!empty($data) && !is_null($data)) {
             foreach ($data as $key => $val) {
-                if(gettype($val)!='data' && gettype($val)!='object'){
+                if(gettype($val)!='array' && gettype($val)!='object'){
                     if ($contador>0) {
                         $concatenar .= '&';
                     }
