@@ -78,6 +78,8 @@ info:
     Once the character sets are ordered and concatenated, the hash is calculated
     using the HMAC function with encryption type sha256, and the private token.
 
+    **Note:** If an element of the data has as value an object or array, it is excluded from the data. This function is in the PHP and Javascript example.
+
     ### PHP Example
     API Endpoint:
     ```php
@@ -103,15 +105,20 @@ info:
     ```
     Transformation of the parameters to url format:
     ```php
-    $i = count($data);
-    $array_concat = null;
-    foreach ($data as $key => $val) {
-        $array_concat .= $key . '=' . urlencode($val);
-        $last_iteration = !(--$i);
-        if (!$last_iteration) {
-            $array_concat .= '&';
-      }
-    }
+        $contador = 0;
+        $concatenar = null;
+
+        if (!empty($data) && !is_null($data)) {
+            foreach ($data as $key => $val) {
+                if(gettype($val)!='data' && gettype($val)!='object'){
+                    if ($contador>0) {
+                        $concatenar .= '&';
+                    }
+                    $concatenar .= $key . '=' . urlencode($val);
+                }
+                $contador++;
+            }
+        }
     ```
     Concatenation of the parameters in url format with the API endpoint:
     ```php
@@ -146,6 +153,9 @@ info:
     const orderedData = {};
     Object.keys(data).sort().forEach(function(key) {
       orderedData[key] = data[key];
+      if (typeof orderedData[key] === 'object') {
+            delete orderedData[key];
+      }
     });
     ```
     Transformation of the parameters to url format:
