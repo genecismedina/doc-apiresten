@@ -1724,7 +1724,7 @@ paths:
 
             let data = {
               plan: "pl9697fb170834ad42dd00",
-              client: "cl9b1e1dd988694f30fa30",
+              client: "cl9b1e1dd988694f30fa30"
             };
 
             request(data);
@@ -1742,9 +1742,6 @@ paths:
                   description: Client id.
                   type: string
                   example: cl9b1e1dd988694f30fa30
-                amount:
-                  description: This field will only be used in the case of variable amount subscription plans, it is important to note that the currency to be used in this type of plan is CLP.
-                  type: string
               required:
                 - plan
                 - client
