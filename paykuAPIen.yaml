@@ -921,7 +921,7 @@ paths:
                   example: José Manuel Muñoz Alarcon
                 accountbank_rut:
                   description: |
-                    Rut of the destination account holder in Venezuela
+                    Identity card of the destination account holder in Venezuela
                     Format: (V/E/J/C) Vxxxxxxx
                   type: string
                   example: "Vxxxxxxx"
