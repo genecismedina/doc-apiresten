@@ -710,7 +710,9 @@ paths:
                   type: string
                   example: "1"
                 accountbank_num:
-                  description: Customer account number
+                  description: |
+                    Customer account number
+                      - **For the bank "banco estado" (sbif 0012) the maximum number of characters is 12 This bank is the most common in Chile, it is good to add the validation of maximum digits of 12. This prevents users from entering their debit card number For the rest of the banks, it can have more than 12 characters since the banks are not standardized in their account number format.**
                   type: string
                   example: "12312312312"
                 url_notify:
