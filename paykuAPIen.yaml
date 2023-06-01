@@ -723,7 +723,7 @@ paths:
                       - {
                           - "id": "morexxzxxx",
                           - "identifier_payout": "morexxzxxx",
-                          - "order:": "367734544",
+                          - "order": "367734544",
                           - "status" : "success",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
