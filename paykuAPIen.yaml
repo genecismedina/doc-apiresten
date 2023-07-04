@@ -3834,7 +3834,7 @@ paths:
                   description: Amount of the sales service, belongs to the amount that the owner of the account will receive per transaction.
                   type: integer
                   example: 10
-                affiliaction:
+                affiliation:
                   type: array
                   description: Distribution of beneficiaries.
                   items:
@@ -6678,7 +6678,7 @@ components:
               type: string
               description: Amount to distribute in the sales service.
               example: "10.00"
-        affiliaction:
+        affiliation:
           type: object
           description: Affiliate information.
           properties:
@@ -6769,7 +6769,7 @@ components:
               type: string
               description: Amount to distribute in the sales service.
               example: "10.00"
-        affiliaction:
+        affiliation:
           type: object
           description: Affiliate information.
           properties:
