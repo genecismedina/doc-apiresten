@@ -692,7 +692,6 @@ paths:
                       - 0055 Banco Consorcio
                       - 0056 Banco Penta
                       - 0057 Banco Paris
-                      - 0059 Banco BTG Pactual Chile
                       - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
                       - 0672 Coopeuch
                       - 729  Caja los Andes
@@ -4056,7 +4055,6 @@ paths:
                           - 0055 Banco Consorcio
                           - 0056 Banco Penta
                           - 0057 Banco Paris
-                          - 0059 Banco BTG Pactual Chile
                           - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
                           - 0672 Coopeuch
                           - 729  Caja los Andes
@@ -4295,7 +4293,6 @@ paths:
                             - 0055 Banco Consorcio
                             - 0056 Banco Penta
                             - 0057 Banco Paris
-                            - 0059 Banco BTG Pactual Chile
                             - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
                             - 0672 Coopeuch
                             - 729  Caja los Andes
@@ -6925,7 +6922,6 @@ components:
                     - 0055 Banco Consorcio
                     - 0056 Banco Penta
                     - 0057 Banco Paris
-                    - 0059 Banco BTG Pactual Chile
                     - 0504 Banco Bilbao Vizcaya Argentaria Chile (BBVA)
                     - 0672 Coopeuch
                     - 729  Caja los Andes
