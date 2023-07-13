@@ -83,7 +83,7 @@ info:
     ### PHP Example
     API Endpoint:
     ```php
-    $request_path = urlencode('/api/suclient')
+    $request_path = urlencode('/api/suclient');
     ```
     Sorting the parameters:
     ```php
@@ -118,15 +118,15 @@ info:
                 }
                 $contador++;
             }
-        }
+        };
     ```
     Concatenation of the parameters in url format with the API endpoint:
     ```php
-    $concat = $request_path.'&'.$array_concat
+    $concat = $request_path.'&'.$array_concat;
     ```
     Sign:
     ```php
-    $sign = hash_hmac('sha256', $concat, '79c5481cffd3ecbd0c8ade5e5b5fc2c6'),
+    $sign = hash_hmac('sha256', $concat, '79c5481cffd3ecbd0c8ade5e5b5fc2c6');
     ```
 
     ### JavaScript Example
