@@ -2113,6 +2113,10 @@ paths:
                   description: Description.
                   type: string
                   example: Description
+                card:
+                  description: With the identifier you can indicate which of the active cards will be charged (OPTIONAL).
+                  type: string
+                  example: "surea041d8a4413949425fec"
               required:
                 - suscription
 
@@ -5879,6 +5883,27 @@ components:
               description: Card type.
               type: string
               example: "Visa"
+        active_cards:
+          type: array
+          items:
+            type: object
+            properties:
+              last_4_digits:
+                description: Last 4 digits of the affiliated carda.
+                type: string
+                example: "XXXXXXXXXXXX6622"
+              identifier:
+                description: id card.
+                type: string
+                example: "surec804a8ed60c747cb8839"
+              card_type:
+                description: card type.
+                type: string
+                example: "Visa"
+              register:
+                description: Register date.
+                type: string
+                example: "2022-07-26 08:00:19"
         transactions:
           type: array
           items:
