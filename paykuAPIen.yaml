@@ -5904,6 +5904,15 @@ components:
                 description: Register date.
                 type: string
                 example: "2022-07-26 08:00:19"
+          example:
+            - last_4_digits: "XXXXXXXXXXXX6622"
+              identifier: "surec804a8ed60c747cb8839"
+              card_type: "Visa"
+              register: "2022-07-26 08:00:19"
+            - last_4_digits: "XXXXXXXXXXXX1234"
+              identifier: "surec804a8ed60c747cb8843"
+              card_type: "MasterCard"
+              register: "2023-01-01 12:00:00"
         transactions:
           type: array
           items:
