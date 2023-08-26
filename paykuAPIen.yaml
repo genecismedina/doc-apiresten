@@ -590,8 +590,8 @@ paths:
                     ]
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN',
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -602,8 +602,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -795,7 +795,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/wallet/payout \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Sign: SIGN'  \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
@@ -842,8 +842,8 @@ paths:
                     ]
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN',
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -854,8 +854,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -871,7 +871,7 @@ paths:
               "order": "98745",
               "amount":  600,
               "accountbank_name": "John Doe",
-              "accountbank_rut": "V11111111",
+              "accountbank_rut": "V23654789",
               "accountbank_sbif": "0001",
               "accountbank_num": "04149876543",
               "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745",
@@ -924,7 +924,7 @@ paths:
                     Identity card of the destination account holder in Venezuela
                     Format: (V/E/J) Vxxxxxxx
                   type: string
-                  example: "Vxxxxxxx"
+                  example: "V23654789"
                 accountbank_sbif:
                   description: |
                     Code of the bank to which the bank account belongs in Venezuela.
