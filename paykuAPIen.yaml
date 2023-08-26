@@ -550,7 +550,7 @@ paths:
               "phone": "123456789",
               "subject": "subject",
               "currency": "CLP",
-              "order": "133222",
+              "order": "98745",
               "amount":  1000,
               "accountbank_name": "example name",
               "accountbank_rut": "111111111",
@@ -800,17 +800,16 @@ paths:
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
-              "email": "example@payku.cl",
-              "phone": "04145555555",
-              "subject": "subject",
+              "email": "johndoe@example.com",
+              "phone": "04149876543",
+              "subject": "payment description",
               "currency": "VES",
-              "order": "133222",
-              "amount":  1000,
-              "accountbank_name": "example name",
-              "accountbank_rut": "V111111111",
+              "order": "98745",
+              "amount":  600,
+              "accountbank_name": "John Doe",
+              "accountbank_rut": "V23654789",
               "accountbank_sbif": "0001",
-              "accountbank_type": "1",
-              "accountbank_num": "04145555555",
+              "accountbank_num": "04149876543",
               "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745",
               "additional_parameters":
                 {
@@ -824,17 +823,16 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('POST', 'https://BASE_URL/api/wallet/payout', [
                 'json' => [
-                    'email' => 'example@payku.cl',
-                    'phone' => '04145555555',
-                    'subject' => 'subject',
-                    'order' => "133222",
+                    'email' => 'johndoe@example.com',
+                    'phone' => '04149876543',
+                    'subject' => 'payment description',
+                    'order' => "98745",
                     'currency' => 'VES',
-                    'amount' =>  1000,
-                    'accountbank_name' => 'example name',
-                    'accountbank_rut' => 'V111111111',
+                    'amount' =>  600,
+                    'accountbank_name' => 'John Doe',
+                    'accountbank_rut' => 'V23654789',
                     'accountbank_sbif' => '0001',
-                    'accountbank_type' => '1',
-                    'accountbank_num' => '04145555555',
+                    'accountbank_num' => '04149876543',
                     'url_notify' => 'https://youwebsite.com/urlnotify?orderClient=98745',
                     'additional_parameters' =>
                     [
@@ -866,17 +864,16 @@ paths:
             }
 
             let data = {
-              "email": "example@payku.cl",
-              "phone": "04145555555",
-              "subject": "subject",
+              "email": "johndoe@example.com",
+              "phone": "04149876543",
+              "subject": "payment description",
               "currency": "VES",
-              "order": "133222",
-              "amount":  1000,
-              "accountbank_name": "example name",
+              "order": "98745",
+              "amount":  600,
+              "accountbank_name": "John Doe",
               "accountbank_rut": "V11111111",
               "accountbank_sbif": "0001",
-              "accountbank_type": "1",
-              "accountbank_num": "04145555555",
+              "accountbank_num": "04149876543",
               "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745",
               "additional_parameters":
                 {
@@ -897,11 +894,11 @@ paths:
                   description: Client email
                   type: string
                   format: email
-                  example: "support@youwebsite.cl"
+                  example: "johndoe@example.com"
                 phone:
                   description: Client phone
                   type: string
-                  example: "04145555555"
+                  example: "04149876543"
                 subject:
                   description: Order Description
                   type: string
@@ -917,15 +914,15 @@ paths:
                 amount:
                   description: Order amount
                   type: float
-                  example: 25000
+                  example: 600
                 accountbank_name:
                   description: Name of the destination account holder
                   type: string
-                  example: José Manuel Muñoz Alarcon
+                  example: John Doe
                 accountbank_rut:
                   description: |
                     Identity card of the destination account holder in Venezuela
-                    Format: (V/E/J/C) Vxxxxxxx
+                    Format: (V/E/J) Vxxxxxxx
                   type: string
                   example: "Vxxxxxxx"
                 accountbank_sbif:
@@ -966,18 +963,11 @@ paths:
                       - 0601 Instituto Municipal de Crédito Popular
                   type: string
                   example: "0001"
-                accountbank_type:
-                  description: |
-                    Account type.
-                    - 1 Corriente
-                    - 2 Vista/Cuenta RUT
-                    - 3 Ahorro
-                  type: string
-                  example: "1"
                 accountbank_num:
-                  description: Customer account number
+                  description: |
+                    Customer's account number in Venezuela Format: (0412 / 0414 / 0424 / 0426 / 0416) 9876543
                   type: string
-                  example: "12312312312"
+                  example: "04149876543"
                 url_notify:
                   description: |
                     url where the result of the payment will be notified.
@@ -1064,7 +1054,7 @@ paths:
             -d '{
               "subject": "subject",
               "currency": "CLP",
-              "order": "133222",
+              "order": "98745",
               "amount":  1000
             }'
         - lang: "PHP"
@@ -1073,7 +1063,7 @@ paths:
               $body = $client->request('POST', 'https://BASE_URL/api/wallet/withdraw', [
                 'json' => [
                     'subject' => 'subject',
-                    'order' => "133222",
+                    'order' => "98745",
                     'currency' => 'CLP',
                     'amount' =>  1000
                   ],
@@ -1102,7 +1092,7 @@ paths:
             let data = {
               "amount":  1000,
               "currency": "CLP",
-              "order": "133222",
+              "order": "98745",
               "subject": "subject"
             };
 
