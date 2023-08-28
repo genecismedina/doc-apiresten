@@ -923,39 +923,33 @@ paths:
                 accountbank_sbif:
                   description: |
                     Code of the bank to which the bank account belongs in Venezuela.
-                      - 0001 Banco Central de Venezuela
-                      - 0016 BCI
-                      - 0027 Corpbanca
-                      - 0049 Banco Security
-                      - 0055 Banco Consorcio
-                      - 0102 Banco de Venezuela, S.A. Banco Universal
-                      - 0104 Banco Venezolano de Crédito, S.A. Banco Universal
-                      - 0105 Banco Mercantil C.A., Banco Universal
-                      - 0108 Banco Provincial, S.A. Banco Universal
-                      - 0114 Banco del Caribe C.A., Banco Universal
-                      - 0115 Banco Exterior C.A., Banco Universal
-                      - 0128 Banco Caroní C.A., Banco Universal
-                      - 0134 Banesco Banco Universal, C.A.
-                      - 0137 Banco Sofitasa Banco Universal, C.A .
-                      - 0138 Banco Plaza, Banco universal
-                      - 0146 Banco de la Gente Emprendedora C.A.
-                      - 0151 Banco Fondo Común, C.A Banco Universal
-                      - 0156 100% Banco, Banco Comercial, C.A
-                      - 0157 DelSur, Banco Universal C.A.
-                      - 0163 Banco del Tesoro C.A., Banco Universal
-                      - 0166 Banco Agrícola de Venezuela C.A., Banco Universal
-                      - 0168 Bancrecer S.A., Banco Microfinanciero
-                      - 0169 Mi Banco, Banco Microfinanciero, C.A.
-                      - 0171 Banco Activo C.A., Banco Universal
-                      - 0172 Bancamiga Banco Universal, C.A.
-                      - 0173 Banco Internacional de Desarrollo C.A., Banco Universal
-                      - 0174 Banplus Banco Universal, C.A.
-                      - 0175 Banco Bicentenario del Pueblo, Banco Universal C.A.
-                      - 0177 Banco de la Fuerza Armada Nacional Bolivariana, B.U.
-                      - 0191 Banco Nacional de Crédito C.A., Banco Universal
-                      - 0504 Banco BBVA
-                      - 0507 Banco del desarrollo
-                      - 0601 Instituto Municipal de Crédito Popular
+                      - 0003 Banco Industrial De Venezuela
+                      - 0102 Banco De Venezuela
+                      - 0104 Banco Venezolano De Credito
+                      - 0105 Banco Mercantil
+                      - 0108 Banco Provincial
+                      - 0114 Banco Del Caribe
+                      - 0115 Banco Exterior
+                      - 0116 Banco Occidental De Descuento
+                      - 0128 Banco Caroni
+                      - 0134 Banesco
+                      - 0137 Sofitasa
+                      - 0138 Banco Plaza
+                      - 0146 Bangente
+                      - 0149 Banco Del Pueblo Soberano
+                      - 0156 100%Banco
+                      - 0157 Delsur
+                      - 0163 Banco Del Tesoro
+                      - 0164 Banco De Desarrollo
+                      - 0166 Banco Agricola
+                      - 0168 Bancrecer
+                      - 0169 Mibanco
+                      - 0171 Banco Activo
+                      - 0172 Bancamiga
+                      - 0173 Banco Internacional De Desarrollo
+                      - 0174 Banplus
+                      - 0175 Banco Bicentenario
+                      - 0191 Banco Nacional De Credito
                   type: string
                   example: "0001"
                 accountbank_num:
