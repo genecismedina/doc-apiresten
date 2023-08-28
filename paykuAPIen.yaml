@@ -443,7 +443,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/conciliation \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
@@ -459,7 +459,7 @@ paths:
                     'date_end' => '2022-10-21'
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN',
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -470,7 +470,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -541,7 +541,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/wallet/payout \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Sign: SIGN'  \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
@@ -1036,7 +1036,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/wallet/withdraw \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Sign: SIGN'  \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
@@ -1057,8 +1057,8 @@ paths:
                     'amount' =>  1000
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41',
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN',
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1069,8 +1069,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -1151,7 +1151,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/wallet  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
         - lang: "PHP"
@@ -1159,7 +1159,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/wallet', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1170,7 +1170,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -1218,7 +1218,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/wallet/list  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
         - lang: "PHP"
@@ -1226,7 +1226,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/wallet/list', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1237,7 +1237,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -1285,7 +1285,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/wallet/{idWallet}  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
         - lang: "PHP"
@@ -1293,7 +1293,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/wallet/{idWallet}', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1304,7 +1304,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -1352,7 +1352,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/payout/{identificadorPayout}  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
         - lang: "PHP"
@@ -1360,7 +1360,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/payout/{identificadorPayout}', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1371,7 +1371,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -1411,7 +1411,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/escrow \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
@@ -1425,7 +1425,7 @@ paths:
                   'transactions' => ['trx3b4d77b43acd9a720','trx3b4d77b43acd9a385'],
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1436,7 +1436,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -1491,7 +1491,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/nullification \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
@@ -1509,7 +1509,7 @@ paths:
                   'subject' => "transaction annulment"
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1520,7 +1520,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -1593,7 +1593,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/nullification/{identifier}  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
         - lang: "PHP"
@@ -1601,7 +1601,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/nullification/{identifier}', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1612,7 +1612,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -1690,8 +1690,8 @@ paths:
                     ]
                   ],
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -1702,8 +1702,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -1835,8 +1835,8 @@ paths:
                   'description' => 'Test Plan'
                   ],
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'              ]
                   ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
@@ -1846,8 +1846,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -1945,8 +1945,8 @@ paths:
                   'client' => ' cl9b1e1dd988694f30fa30',
                   ],
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'
                   ]
                 ])->getBody();
               $response = json_decode($body);
@@ -1957,8 +1957,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -2041,8 +2041,8 @@ paths:
                   'description' => 'Description'
                   ],
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'
                   ]
                 ])->getBody();
               $response = json_decode($body);
@@ -2053,8 +2053,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -2168,8 +2168,8 @@ paths:
                     ]
                   ],
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -2180,8 +2180,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -2313,8 +2313,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/suclient/cla90927fa9b30e1dfffa0', [
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -2325,8 +2325,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -2410,8 +2410,8 @@ paths:
                 ],
               ],
               'headers' => [
-                'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                'Authorization' => 'Bearer PUBLIC-TOKEN'
               ]
             ])->getBody();
             $response = json_decode($body);
@@ -2422,8 +2422,8 @@ paths:
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -2545,8 +2545,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('DELETE', 'https://BASE_URL/api/suclient/cla90927fa9b30e1dfffa0', [
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'              ]
                   ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
@@ -2556,8 +2556,8 @@ paths:
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -2607,8 +2607,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/suclient/customers', [
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -2619,8 +2619,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -2676,8 +2676,8 @@ paths:
                   'client' => ' cl9b1e1dd988694f30fa30',
                   ],
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'
                   ]
                 ])->getBody();
               $response = json_decode($body);
@@ -2688,8 +2688,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -2764,8 +2764,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/suclient/customers', [
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -2776,8 +2776,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -2845,8 +2845,8 @@ paths:
                   'description' => ' descripcion'
                   ],
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'
                   ]
                 ])->getBody();
               $response = json_decode($body);
@@ -2857,8 +2857,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -2946,8 +2946,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/sususcription/sucaab7865dceaff49d8b', [
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -2958,8 +2958,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -3013,8 +3013,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('DELETE', 'https://BASE_URL/api/sususcription/sucaab7865dceaff49d8b3, [
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'              ]
                   ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
@@ -3024,8 +3024,8 @@ paths:
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -3087,8 +3087,8 @@ paths:
                   'suscription' => sucaab7865dceaff49d8b3,
                   ],
                   'headers' => [
-                    'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                    'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'              ]
                   ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
@@ -3098,8 +3098,8 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -3172,8 +3172,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/suplan/pl29f6ad69fbd594148c39', [
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3184,8 +3184,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -3233,8 +3233,8 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/suplan/plans', [
                 'headers' => [
-                  'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3245,8 +3245,8 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -3317,7 +3317,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/transaction \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
@@ -3355,7 +3355,7 @@ paths:
                     }
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3366,7 +3366,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -3547,7 +3547,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/transaction  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
         - lang: "PHP"
@@ -3555,7 +3555,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/transaction', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3566,7 +3566,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -3619,7 +3619,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/transaction/ID-IDENTIFICADOR  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
         - lang: "PHP"
@@ -3627,7 +3627,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/transaction/10ac494c1d8da71d98ea', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3638,7 +3638,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -3739,7 +3739,7 @@ paths:
                     ]
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3750,7 +3750,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -3882,7 +3882,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/event/98374', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3893,7 +3893,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -3962,7 +3962,7 @@ paths:
                   ]
                 ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -3973,7 +3973,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -4112,7 +4112,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -4123,7 +4123,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -4198,8 +4198,8 @@ paths:
                 ],
               ],
               'headers' => [
-                'Sign' => '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                'Sign' => 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                'Authorization' => 'Bearer PUBLIC-TOKEN'
               ]
             ])->getBody();
             $response = json_decode($body);
@@ -4210,8 +4210,8 @@ paths:
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Sign': '0d04820b87c80f79a89235fcd256d9b6cddee2fc15fa50034c1903370f3de8c6',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Sign': 'SHA256-REQUEST-PATH-VALUE-PRIVATE-TOKEN',
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -4334,7 +4334,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('DELETE', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [
                   'headers' => [
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'              ]
                   ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
@@ -4344,7 +4344,7 @@ paths:
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -4405,7 +4405,7 @@ paths:
                   ]
                 ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -4416,7 +4416,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -4503,7 +4503,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('GET', 'https://BASE_URL/api/maaffiliation/sucaab7865dceaff49d8b3', [
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -4514,7 +4514,7 @@ paths:
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -4568,7 +4568,7 @@ paths:
             $client = new \GuzzleHttp\Client();
               $body = $client->request('DELETE', 'https://BASE_URL/api/maclient/madb93fc00a2cf6f4449', [
                   'headers' => [
-                    'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'              ]
+                    'Authorization' => 'Bearer PUBLIC-TOKEN'              ]
                   ])->getBody();
                 $response = json_decode($body);
         - lang: "JS"
@@ -4578,7 +4578,7 @@ paths:
                 method: 'DELETE',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
@@ -4619,7 +4619,7 @@ paths:
             curl -X POST \
             https://BASE-URL/api/transaction \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL' \
             -d '{
@@ -4647,7 +4647,7 @@ paths:
                   'marketplace' => 'c1c879f4862d393ea6b326a313022dd98f0baa2869d3e9095c124199c9941030'
                   ],
                 'headers' => [
-                  'Authorization' => 'Bearer 8c872egfdg996f8b418c872e996f8b418c872e996f8b41'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -4658,7 +4658,7 @@ paths:
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -4775,7 +4775,7 @@ paths:
                 "merchant": [
                   ["81b6179e4feeef2b50af71d660f830de", "30000", "item1"],
                   ["bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b","25000","item2"],
-                  ["3952097d617679f98c587bad0b3a781d","15000","item3"]
+                  ["PUBLIC-TOKEN","15000","item3"]
                 ],
                 "order": 123,
                 "urlreturn": "https://youwebsite.cl/urlreturn",
@@ -4790,7 +4790,7 @@ paths:
                   'merchant'      => [
                     ['81b6179e4feeef2b50af71d660f830de', '30000', 'item1'],
                     ['bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b','25000','item2'],
-                    ['3952097d617679f98c587bad0b3a781d','15000','item3']
+                    ['PUBLIC-TOKEN','15000','item3']
                   ],
                   'order'         => 123,
                   'urlreturn'     => 'https://youwebsite.cl/urlreturn',
@@ -4798,7 +4798,7 @@ paths:
                   ],
                 'headers' => [
                   'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
-                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -4810,7 +4810,7 @@ paths:
                 headers: {
                   'Content-Type': 'application/json',
                   'Sign': 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
-                  'Authorization': 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization': 'Bearer PUBLIC-TOKEN'
                 },
                 body: JSON.stringify(data)
               });
@@ -4822,7 +4822,7 @@ paths:
               merchant: [
                 ["81b6179e4feeef2b50af71d660f830de", "30000", "item1"],
                 ["bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b","25000","item2"],
-                ["3952097d617679f98c587bad0b3a781d","15000","item3"]
+                ["PUBLIC-TOKEN","15000","item3"]
               ],
               order: 123,
               urlreturn: "https://youwebsite.cl/urlreturn",
@@ -4846,7 +4846,7 @@ paths:
                   example:
                     - [81b6179e4feeef2b50af71d660f830de,30000,item1]
                     - [bcf6c06c523d9394be41bc0174c43d1476f274abb342955aac93cc8014737b3b,25000,item2]
-                    - [3952097d617679f98c587bad0b3a781d,15000,item3]
+                    - [PUBLIC-TOKEN,15000,item3]
                 order:
                   description: Trade order, this must be unique.
                   type: integer
@@ -4912,7 +4912,7 @@ paths:
             curl -X GET \
             https://BASE-URL/api/mall/ID-IDENTIFICADOR  \
             -H 'Accept: application/json, text/plain, */*' \
-            -H 'Authorization: Bearer TOKEN-PUBLICO' \
+            -H 'Authorization: Bearer PUBLIC-TOKEN' \
             -H 'Content-Type: application/json,application/json' \
             -H 'Host: BASE-URL ' \
         - lang: 'PHP'
@@ -4921,7 +4921,7 @@ paths:
               $body = $client->request('GET', 'https://[base URL]/api/mall/malld200058ab44739ddee2adcd2f5', [
                 'headers' => [
                   'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
-                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 ]
               ])->getBody();
             $response = json_decode($body);
@@ -4933,7 +4933,7 @@ paths:
                 headers: {
                   'Content-Type': 'application/json',
                   'Sign' => 'f96ddc14a73a4dd6e009db2514108a3f44832795cd5ac50e6a80fd0b0ae92112',
-                  'Authorization' => 'Bearer 3952097d617679f98c587bad0b3a781d'
+                  'Authorization' => 'Bearer PUBLIC-TOKEN'
                 },
               });
               const result = await response.json();
