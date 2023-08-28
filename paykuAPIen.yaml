@@ -3348,11 +3348,11 @@ paths:
                   'expired' => '2022-10-19 13:05:10',
                   'urlreturn' => 'https://youwebsite.com/urlreturn?orderClient=123',
                   'urlnotify' => 'https://youwebsite.com/urlnotify?orderClient=123',
-                    'additional_parameters': {
+                    'additional_parameters' => [
                       'parameters1'=>'keyValue',
                       'parameters2'=>'keyValue2',
                       'order_ext'=>'fff-777'
-                    }
+                    ]
                   ],
                 'headers' => [
                   'Authorization' => 'Bearer PUBLIC-TOKEN'
