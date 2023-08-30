@@ -662,7 +662,7 @@ paths:
                   example: "98745"
                 amount:
                   description: Order amount
-                  type: float
+                  type: integer
                   example: 25000
                 accountbank_name:
                   description: Name of the destination account holder
@@ -908,7 +908,7 @@ paths:
                   example: "98745"
                 amount:
                   description: Order amount
-                  type: float
+                  type: integer
                   example: 600
                 accountbank_name:
                   description: Name of the destination account holder
@@ -1106,7 +1106,7 @@ paths:
                   example: "98745"
                 amount:
                   description: order amount
-                  type: float
+                  type: integer
                   example: 25000
               required:
                 - subject
