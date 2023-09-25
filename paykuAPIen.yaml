@@ -1621,6 +1621,22 @@ paths:
 
             request();
 
+  callback:
+    get:
+      tags:
+        - Nullification
+      summary: Generate callback.
+      description: |
+        From the payku application, you can generate the notification **url** from the configuration section.
+        <br>
+        <div class='container'>
+          <img src='/assets/Muestra-Url-Notificaciones.png' alt='Avatar' class='image' style='width:100%'>
+          <div class='middle'>
+            <a target='_blank' href='/assets/Muestra-Url-Notificaciones.png' class='text'>See example</a>
+          </div>
+        </div>
+
+
   /api/suclient/:
     post:
       tags:
