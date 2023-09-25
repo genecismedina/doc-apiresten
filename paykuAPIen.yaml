@@ -1622,12 +1622,13 @@ paths:
             request();
 
   callback:
-    get:
+    post:
       tags:
         - Nullification
       summary: Generate callback.
       description: |
         From the payku application, you can generate the notification **url** from the configuration section.
+
         <br>
         <div class='container'>
           <img src='/assets/Muestra-Url-Notificaciones.png' alt='Avatar' class='image' style='width:100%'>
@@ -1636,6 +1637,15 @@ paths:
           </div>
         </div>
 
+            Example of callback response:
+              {
+                  "id": "morexxzxxx",
+                  "id_transaction": "morexxzxxx",
+                  "ordencompra": "367734544",
+                  "fecha": "24-08-2023 12:29:35",
+                  "monto": 7000,
+                  "status": "complete"
+              }
 
   /api/suclient/:
     post:
