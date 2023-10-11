@@ -965,6 +965,7 @@ paths:
                       - {
                           - "id": "morexxzxxx",
                           - "identifier_payout": "morexxzxxx",
+                          - "order": "367734544",
                           - "status" : "success",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
@@ -972,6 +973,7 @@ paths:
                       - {
                           - "id": "morexzxxxx",
                           - "identifier_payout": "morexzxxxx",
+                          - "order": "367734544",
                           - "status" : "banking_error",
                           - "update_at" : "2022-09-27 12:29:35"
                       - }
