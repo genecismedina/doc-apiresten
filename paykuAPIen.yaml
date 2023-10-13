@@ -923,30 +923,20 @@ paths:
                 accountbank_sbif:
                   description: |
                     Code of the bank to which the bank account belongs in Venezuela.
-                      - 0003 Banco Industrial De Venezuela
                       - 0102 Banco De Venezuela
                       - 0104 Banco Venezolano De Credito
                       - 0105 Banco Mercantil
                       - 0108 Banco Provincial
                       - 0114 Banco Del Caribe
                       - 0115 Banco Exterior
-                      - 0116 Banco Occidental De Descuento
                       - 0128 Banco Caroni
                       - 0134 Banesco
-                      - 0137 Sofitasa
                       - 0138 Banco Plaza
-                      - 0146 Bangente
-                      - 0149 Banco Del Pueblo Soberano
+                      - 0151 Banco Fondo Común
                       - 0156 100%Banco
-                      - 0157 Delsur
                       - 0163 Banco Del Tesoro
-                      - 0164 Banco De Desarrollo
-                      - 0166 Banco Agricola
-                      - 0168 Bancrecer
-                      - 0169 Mibanco
                       - 0171 Banco Activo
                       - 0172 Bancamiga
-                      - 0173 Banco Internacional De Desarrollo
                       - 0174 Banplus
                       - 0175 Banco Bicentenario
                       - 0191 Banco Nacional De Credito
