@@ -953,19 +953,31 @@ paths:
                     - Note: After making the payment to third parties, payku will automatically respond to the endpoint entered in urlnotify the result of the operation.
                       - **Approved Example:**
                       - {
-                          - "id": "morexxzxxx",
-                          - "identifier_payout": "morexxzxxx",
-                          - "order": "367734544",
+                          - "id": "morexzxxxx",
+                          - "identifier_payout": "morexzxxxx",
+                          - "order" : "367734544",
                           - "status" : "success",
-                          - "update_at" : "2022-09-27 12:29:35"
+                          - "update_at" : "2023-08-24 12:29:35",
+                          - "customer" : {
+                            - "name" : "Jhon Doe",
+                            - "phone" : "04149876543",
+                            - "document" : "V23654789",
+                            - "number" : "04149876543"
+                          - }
                       - }
                       - **Rejected Example:**
                       - {
                           - "id": "morexzxxxx",
                           - "identifier_payout": "morexzxxxx",
-                          - "order": "367734544",
+                          - "order" : "367734544",
                           - "status" : "banking_error",
-                          - "update_at" : "2022-09-27 12:29:35"
+                          - "update_at" : "2023-08-24 12:29:35",
+                          - "customer" : {
+                            - "name" : "Jhon Doe",
+                            - "phone" : "04149876543",
+                            - "document" : "V23654789",
+                            - "number" : "04149876543"
+                          - }
                       - }
                   type: string
                   example: "https://youwebsite.com/urlnotify?orderClient=98745"
