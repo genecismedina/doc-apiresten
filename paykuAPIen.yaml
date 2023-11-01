@@ -813,7 +813,7 @@ paths:
               "amount":  600,
               "accountbank_name": "John Doe",
               "accountbank_rut": "V23654789",
-              "accountbank_sbif": "0001",
+              "accountbank_sbif": "0102",
               "accountbank_num": "04149876543",
               "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745",
               "additional_parameters":
@@ -836,7 +836,7 @@ paths:
                     'amount' =>  600,
                     'accountbank_name' => 'John Doe',
                     'accountbank_rut' => 'V23654789',
-                    'accountbank_sbif' => '0001',
+                    'accountbank_sbif' => '0102',
                     'accountbank_num' => '04149876543',
                     'url_notify' => 'https://youwebsite.com/urlnotify?orderClient=98745',
                     'additional_parameters' =>
@@ -877,7 +877,7 @@ paths:
               "amount":  600,
               "accountbank_name": "John Doe",
               "accountbank_rut": "V23654789",
-              "accountbank_sbif": "0001",
+              "accountbank_sbif": "0102",
               "accountbank_num": "04149876543",
               "url_notify": "https://youwebsite.com/urlnotify?orderClient=98745",
               "additional_parameters":
@@ -951,7 +951,7 @@ paths:
                       - 0175 Banco Bicentenario
                       - 0191 Banco Nacional De Credito
                   type: string
-                  example: "0001"
+                  example: "0102"
                 accountbank_num:
                   description: |
                     Customer's account number in Venezuela Format: (0412 / 0414 / 0424 / 0426 / 0416) 9876543
